@@ -84,7 +84,8 @@ export async function createUser(values: unknown): Promise<Result> {
     });
     revalidatePath("/users");
     return { ok: true, id };
-  } catch {
+  } catch (err) {
+    console.error("[createUser] error:", err);
     return { ok: false, error: "failed" };
   }
 }
