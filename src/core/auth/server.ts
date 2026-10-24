@@ -58,6 +58,7 @@ export const auth = betterAuth({
   trustedOrigins: [
     process.env.BETTER_AUTH_URL,
     "https://clinicos-business.vercel.app",
+    "https://clinicos-business1.vercel.app",
     process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
     process.env.VERCEL_BRANCH_URL ? `https://${process.env.VERCEL_BRANCH_URL}` : undefined,
     process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined,
