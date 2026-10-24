@@ -35,19 +35,19 @@ const schema = z.object({
 });
 
 export async function createUser(values: unknown): Promise<Result> {
-  const user = await requirePermission("users:manage");
-  const parsed = schema.safeParse(values);
-  if (!parsed.success) return { ok: false, error: "invalid" };
-  const v = parsed.data;
-  if (!user.roleId) return { ok: false, error: "failed" };
-
-  const [byUsername, byEmail] = await Promise.all([
-    prisma.user.findUnique({ where: { username: v.username }, select: { id: true } }),
-    prisma.user.findUnique({ where: { email: v.email }, select: { id: true } }),
-  ]);
-  if (byUsername || byEmail) return { ok: false, error: "exists" };
-
   try {
+    const user = await requirePermission("users:manage");
+    const parsed = schema.safeParse(values);
+    if (!parsed.success) return { ok: false, error: "invalid" };
+    const v = parsed.data;
+    if (!user.roleId) return { ok: false, error: "failed" };
+
+    const [byUsername, byEmail] = await Promise.all([
+      prisma.user.findUnique({ where: { username: v.username }, select: { id: true } }),
+      prisma.user.findUnique({ where: { email: v.email }, select: { id: true } }),
+    ]);
+    if (byUsername || byEmail) return { ok: false, error: "exists" };
+
     const clinicId = user.currentClinicId ?? v.clinicId ?? null;
     const created = await auth.api.signUpEmail({
       body: {
@@ -83,6 +83,7 @@ export async function createUser(values: unknown): Promise<Result> {
       metadata: { username: v.username, email: v.email, roleId: v.roleId },
     });
     revalidatePath("/users");
+    revalidatePath("/employees");
     return { ok: true, id };
   } catch (err: any) {
     console.error("[createUser] error:", err?.message || err);

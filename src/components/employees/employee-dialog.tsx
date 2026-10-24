@@ -103,7 +103,7 @@ export function EmployeeDialog({
         setOpen(false);
         router.refresh();
       } else {
-        toast.error(labels.failed);
+        toast.error((res as any).error === "exists" ? "User exists" : (res as any).error === "invalid" ? "Invalid data" : labels.failed);
       }
     } catch {
       toast.error(labels.failed);
