@@ -2,9 +2,15 @@ import { PrismaClient } from "@/lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 function createClient() {
+  let url = process.env.DATABASE_URL || "";
+  if (url && process.env.VERCEL && url.includes(":6543")) {
+    if (!url.includes("pgbouncer=")) {
+      url = url.includes("?") ? `${url}&pgbouncer=true` : `${url}?pgbouncer=true`;
+    }
+  }
   const adapter = new PrismaPg({
-    connectionString: process.env.DATABASE_URL,
-    max: process.env.VERCEL ? 2 : 5,
+    connectionString: url,
+    max: process.env.VERCEL ? 1 : 5,
     idleTimeoutMillis: 5000,
     connectionTimeoutMillis: 10_000,
     allowExitOnIdle: true,
