@@ -20,31 +20,37 @@ export type SessionUser = {
 };
 
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user) return null;
-  const u = session.user as unknown as SessionUser;
-  let currentClinicId = u.currentClinicId ?? null;
-  if (!currentClinicId && u.id) {
-    try {
-      const dbUser = await prisma.user.findUnique({
-        where: { id: u.id },
-        select: { clinicId: true, currentClinicId: true },
-      });
-      currentClinicId = dbUser?.currentClinicId ?? dbUser?.clinicId ?? null;
-    } catch (err) {
-      console.error("[session] clinic fallback failed:", err);
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session?.user) { console.error("[session] no session"); return null; }
+    const u = session.user as unknown as SessionUser;
+    let currentClinicId = u.currentClinicId ?? null;
+    if (!currentClinicId && u.id) {
+      try {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: u.id },
+          select: { clinicId: true, currentClinicId: true },
+        });
+        currentClinicId = dbUser?.currentClinicId ?? dbUser?.clinicId ?? null;
+      } catch (err: any) {
+        console.error("[session] clinic fallback failed:", err?.message);
+      }
     }
+    console.error("[session] got user:", u.id, currentClinicId);
+    return {
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      username: u.username ?? "",
+      image: u.image,
+      roleId: u.roleId ?? "",
+      currentClinicId,
+      departmentId: u.departmentId ?? null,
+    };
+  } catch (err: any) {
+    console.error("[session] getSessionUser error:", err?.message, err?.stack?.split('\n').slice(0,3).join(' | '));
+    return null;
   }
-  return {
-    id: u.id,
-    name: u.name,
-    email: u.email,
-    username: u.username ?? "",
-    image: u.image,
-    roleId: u.roleId ?? "",
-    currentClinicId,
-    departmentId: u.departmentId ?? null,
-  };
 }
 
 const getRoleCode = cache(async (roleId: string) => {
