@@ -15,7 +15,13 @@ export default async function UsersPage() {
   const user = await requirePermission("users:manage");
   const t = await getTranslations("users");
   const tc = await getTranslations("common");
-  const clinicId = user.currentClinicId;
+  let clinicId = user.currentClinicId ?? null;
+  if (!clinicId) {
+    try {
+      const dbUser = await prisma.user.findUnique({ where: { id: user.id }, select: { clinicId: true, currentClinicId: true } });
+      clinicId = dbUser?.currentClinicId ?? dbUser?.clinicId ?? null;
+    } catch {}
+  }
 
   const [users, roles, clinics] = await Promise.all([
     prisma.user.findMany({

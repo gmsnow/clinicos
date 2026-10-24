@@ -17,7 +17,13 @@ export default async function EmployeesPage() {
   const t = await getTranslations("employees");
   const tu = await getTranslations("users");
   const tc = await getTranslations("common");
-  const clinicId = user.currentClinicId;
+  let clinicId = user.currentClinicId ?? null;
+  if (!clinicId) {
+    try {
+      const dbUser = await prisma.user.findUnique({ where: { id: user.id }, select: { clinicId: true, currentClinicId: true } });
+      clinicId = dbUser?.currentClinicId ?? dbUser?.clinicId ?? null;
+    } catch {}
+  }
   const canManage = await can(user, "users:manage");
 
   const [employees, roles, departments] = await Promise.all([
