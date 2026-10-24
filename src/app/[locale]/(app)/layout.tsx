@@ -7,7 +7,12 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await requireUser();
-  const groups = await filterNav(user);
-  return <AppShell groups={groups} user={user}>{children}</AppShell>;
+  try {
+    const user = await requireUser();
+    const groups = await filterNav(user);
+    return <AppShell groups={groups} user={user}>{children}</AppShell>;
+  } catch (err) {
+    console.error("[app-layout] failed:", err);
+    throw err;
+  }
 }

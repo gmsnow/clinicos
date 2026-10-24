@@ -142,6 +142,20 @@ function uniqueViolation(error: unknown): ActionError | null {
   return "invalid";
 }
 
+async function resolveClinicId(user: { id: string; currentClinicId?: string | null }): Promise<string | null> {
+  if (user.currentClinicId) return user.currentClinicId;
+  try {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { clinicId: true, currentClinicId: true },
+    });
+    return dbUser?.currentClinicId ?? dbUser?.clinicId ?? null;
+  } catch (err) {
+    console.error("[patients] clinic resolve failed:", err);
+    return null;
+  }
+}
+
 export async function createPatient(
   values: PatientFormValues,
   options?: SavePatientOptions,
@@ -149,7 +163,7 @@ export async function createPatient(
   try {
     const user = await requirePermission("patients:write");
     const parsed = patientFormSchema.parse(values);
-    const clinicId = user.currentClinicId;
+    const clinicId = await resolveClinicId(user);
     if (!clinicId) return { ok: false, error: "no-clinic" };
 
     // Check if a patient with this national ID already exists in the clinic.
@@ -240,7 +254,7 @@ export async function updatePatient(
   try {
     const user = await requirePermission("patients:write");
     const parsed = patientFormSchema.parse(values);
-    const clinicId = user.currentClinicId;
+    const clinicId = await resolveClinicId(user);
     if (!clinicId) return { ok: false, error: "no-clinic" };
 
     const existing = await prisma.patient.findFirst({ where: { id, clinicId } });
@@ -299,7 +313,7 @@ export async function deletePatient(
 ): Promise<DeletePatientResult> {
   try {
     const user = await requirePermission("patients:write");
-    const clinicId = user.currentClinicId;
+    const clinicId = await resolveClinicId(user);
     if (!clinicId) return { ok: false, error: "no-clinic" };
 
     const patient = await prisma.patient.findFirst({

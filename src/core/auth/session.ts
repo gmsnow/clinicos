@@ -23,6 +23,18 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) return null;
   const u = session.user as unknown as SessionUser;
+  let currentClinicId = u.currentClinicId ?? null;
+  if (!currentClinicId && u.id) {
+    try {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: u.id },
+        select: { clinicId: true, currentClinicId: true },
+      });
+      currentClinicId = dbUser?.currentClinicId ?? dbUser?.clinicId ?? null;
+    } catch (err) {
+      console.error("[session] clinic fallback failed:", err);
+    }
+  }
   return {
     id: u.id,
     name: u.name,
@@ -30,7 +42,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     username: u.username ?? "",
     image: u.image,
     roleId: u.roleId ?? "",
-    currentClinicId: u.currentClinicId ?? null,
+    currentClinicId,
     departmentId: u.departmentId ?? null,
   };
 }
