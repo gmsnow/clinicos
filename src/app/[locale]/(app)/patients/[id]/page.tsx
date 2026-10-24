@@ -17,17 +17,25 @@ export default async function PatientDetailPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ tab?: string }>;
 }) {
-  const user = await requirePermission("patients:read");
-  const { id } = await params;
-  const { tab } = await searchParams;
-  const locale = await getLocale();
-  const clinicId = user.currentClinicId ?? "";
-  const activeTab = resolveProfileTab(tab);
+  try {
+    const user = await requirePermission("patients:read");
+    const { id } = await params;
+    const { tab } = await searchParams;
+    const locale = await getLocale();
+    let clinicId = user.currentClinicId ?? "";
+    if (!clinicId) {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { clinicId: true, currentClinicId: true },
+      });
+      clinicId = dbUser?.currentClinicId ?? dbUser?.clinicId ?? "";
+    }
+    const activeTab = resolveProfileTab(tab);
 
-  const patient = await prisma.patient.findFirst({
-    where: { id, clinicId },
-  });
-  if (!patient) notFound();
+    const patient = await prisma.patient.findFirst({
+      where: { id, clinicId },
+    });
+    if (!patient) notFound();
 
   await recordPatientView(patient.id);
 
@@ -70,33 +78,37 @@ export default async function PatientDetailPage({
     lastNameAr: string;
   }) => [p.firstNameAr, p.secondNameAr, p.lastNameAr].filter(Boolean).join(" ");
 
-  return (
-    <div className="flex flex-col gap-6">
-      <PatientIdentity
-        patient={patient}
-        locale={locale}
-        canWrite={canAdmin}
-        canMerge={canMerge}
-        mergedInto={mergedInto ? { ...mergedInto, name: nameOf(mergedInto) } : null}
-        mergedDuplicates={mergedDuplicates.map((d) => ({ ...d, name: nameOf(d) }))}
-      />
+    return (
+      <div className="flex flex-col gap-6">
+        <PatientIdentity
+          patient={patient}
+          locale={locale}
+          canWrite={canAdmin}
+          canMerge={canMerge}
+          mergedInto={mergedInto ? { ...mergedInto, name: nameOf(mergedInto) } : null}
+          mergedDuplicates={mergedDuplicates.map((d) => ({ ...d, name: nameOf(d) }))}
+        />
 
-      <PatientProfileTabs active={activeTab} counts={counts} />
+        <PatientProfileTabs active={activeTab} counts={counts} />
 
-      <ProfilePanel
-        tab={activeTab}
-        clinicId={clinicId}
-        patientId={id}
-        patient={patient}
-        counts={counts}
-        locale={locale}
-        permissions={{
-          clinical: canClinical,
-          sign: canSign,
-          admin: canAdmin,
-          audit: canAudit,
-        }}
-      />
-    </div>
-  );
+        <ProfilePanel
+          tab={activeTab}
+          clinicId={clinicId}
+          patientId={id}
+          patient={patient}
+          counts={counts}
+          locale={locale}
+          permissions={{
+            clinical: canClinical,
+            sign: canSign,
+            admin: canAdmin,
+            audit: canAudit,
+          }}
+        />
+      </div>
+    );
+  } catch (e) {
+    console.error("PatientDetailPage error:", e);
+    throw e;
+  }
 }
