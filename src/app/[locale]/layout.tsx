@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { AppPreferencesProvider } from "@/components/providers/app-preferences";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeInitScript } from "@/components/providers/theme-init-script";
+import { PWARegister } from "@/components/pwa-register";
 import { routing } from "@/i18n/routing";
 
 const inter = Inter({
@@ -43,6 +44,17 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
+    manifest: "/manifest.json",
+    themeColor: "#0a0a0a",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: "ClinicOS",
+    },
+    icons: {
+      icon: "/icon-192.png",
+      apple: "/icon-192.png",
+    },
   };
 }
 
@@ -75,6 +87,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider defaultTheme="system" disableTransitionOnChange>
             <AppPreferencesProvider>{children}</AppPreferencesProvider>
+            <PWARegister />
             <Toaster />
           </ThemeProvider>
         </NextIntlClientProvider>
