@@ -25,3 +25,7 @@ export const prisma = globalForPrisma.prisma ?? createClient();
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }
+
+if (typeof process !== "undefined") {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
