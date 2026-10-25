@@ -8,12 +8,12 @@ function createClient() {
       url = url.includes("?") ? `${url}&pgbouncer=true` : `${url}?pgbouncer=true`;
     }
   }
+  // For Vercel, use transaction pooler settings
   const adapter = new PrismaPg({
     connectionString: url,
-    max: process.env.VERCEL ? 1 : 5,
-    idleTimeoutMillis: 5000,
+    max: 1,
+    idleTimeoutMillis: 0,
     connectionTimeoutMillis: 10_000,
-    allowExitOnIdle: true,
   });
   return new PrismaClient({ adapter, log: [] });
 }
