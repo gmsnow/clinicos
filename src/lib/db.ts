@@ -1,5 +1,6 @@
 import { PrismaClient } from "@/lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
 function createClient() {
   let url = process.env.DATABASE_URL || "";
@@ -8,17 +9,14 @@ function createClient() {
       url = url.includes("?") ? `${url}&pgbouncer=true` : `${url}?pgbouncer=true`;
     }
   }
-  const adapter = new PrismaPg(
-    {
-      connectionString: url,
-      max: process.env.VERCEL ? 1 : 5,
-      idleTimeoutMillis: 5000,
-      connectionTimeoutMillis: 10_000,
-      allowExitOnIdle: true,
-      ssl: { rejectUnauthorized: false },
-    } as any,
-    {},
-  );
+  const pool = new Pool({
+    connectionString: url,
+    max: process.env.VERCEL ? 1 : 5,
+    idleTimeoutMillis: 5000,
+    connectionTimeoutMillis: 10_000,
+    ssl: process.env.VERCEL ? { rejectUnauthorized: false } : undefined,
+  });
+  const adapter = new PrismaPg(pool as any, {});
   return new PrismaClient({ adapter, log: [] });
 }
 
