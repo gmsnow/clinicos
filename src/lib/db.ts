@@ -8,13 +8,17 @@ function createClient() {
       url = url.includes("?") ? `${url}&pgbouncer=true` : `${url}?pgbouncer=true`;
     }
   }
-  const adapter = new PrismaPg({
-    connectionString: url,
-    max: process.env.VERCEL ? 1 : 5,
-    idleTimeoutMillis: 5000,
-    connectionTimeoutMillis: 10_000,
-    allowExitOnIdle: true,
-  } as any);
+  const adapter = new PrismaPg(
+    {
+      connectionString: url,
+      max: process.env.VERCEL ? 1 : 5,
+      idleTimeoutMillis: 5000,
+      connectionTimeoutMillis: 10_000,
+      allowExitOnIdle: true,
+      ssl: { rejectUnauthorized: false },
+    } as any,
+    {},
+  );
   return new PrismaClient({ adapter, log: [] });
 }
 
