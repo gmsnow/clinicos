@@ -14,7 +14,7 @@ function createClient() {
     idleTimeoutMillis: 5000,
     connectionTimeoutMillis: 10_000,
     allowExitOnIdle: true,
-  });
+  } as any);
   return new PrismaClient({ adapter, log: [] });
 }
 
