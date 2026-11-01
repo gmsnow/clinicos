@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
         recipientId,
         recipientType,
         subject,
-        body,
+        body: messageBody,
         data,
         scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
         sentAt: isInApp ? now : null,

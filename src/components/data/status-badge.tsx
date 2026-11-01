@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 /**
  * Single source of truth for how a domain status maps to a visual tone.
  * Replaces seven copy-pasted badge maps spread across appointments, billing,
- * lab, imaging, inventory, encounters and merges.
+ * lab, imaging, inventory and encounters.
  *
  * Labels are never stored here — each page passes its own translated string,
  * so the map stays locale-agnostic.
