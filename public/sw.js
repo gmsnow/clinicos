@@ -1,5 +1,13 @@
-const CACHE_NAME = 'clinicos-v2';
-const PRECACHE = ['/manifest.json', '/icon-192.png', '/icon-512.png'];
+const CACHE_NAME = 'clinicos-v3';
+const PRECACHE = [
+  '/manifest.json',
+  '/icon.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
+  '/favicon-32.png',
+  '/favicon.ico',
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

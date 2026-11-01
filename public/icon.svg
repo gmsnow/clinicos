@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="clinicTurquoise" x1="140" y1="120" x2="380" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#25C5B5"/>
+      <stop offset="1" stop-color="#35D6C0"/>
+    </linearGradient>
+    <linearGradient id="clinicExtrusion" x1="256" y1="50" x2="256" y2="466" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#35D6C0"/>
+      <stop offset="1" stop-color="#25C5B5"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="48" y="50" width="416" height="416" rx="96" fill="url(#clinicExtrusion)" opacity="0.95"/>
+  <rect x="48" y="34" width="416" height="416" rx="96" fill="#FFFFFF"/>
+
+  <path d="M256 358C222 328 138 278 138 208C138 164 172 136 208 136C229 136 246 146 256 164C266 146 283 136 304 136C340 136 374 164 374 208C374 278 290 328 256 358Z" fill="url(#clinicTurquoise)"/>
+
+  <path d="M178 252H212L222 262L232 240L242 252H260L270 262L280 198L290 290L300 252H334" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
