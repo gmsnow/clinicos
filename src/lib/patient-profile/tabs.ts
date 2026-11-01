@@ -3,7 +3,6 @@ import {
   FileText,
   FlaskConical,
   FolderOpen,
-  GitMerge,
   HeartPulse,
   History,
   LayoutDashboard,
@@ -32,7 +31,6 @@ export const PROFILE_TABS = [
   { id: "followup", labelKey: "tabFollowUp", icon: CalendarClock },
   { id: "referrals", labelKey: "tabReferrals", icon: Share2 },
   { id: "audit", labelKey: "tabAudit", icon: ScrollText },
-  { id: "merges", labelKey: "tabMerges", icon: GitMerge },
 ] as const;
 
 export type ProfileTabId = (typeof PROFILE_TABS)[number]["id"];

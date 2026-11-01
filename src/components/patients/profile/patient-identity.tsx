@@ -1,4 +1,4 @@
-import { GitMerge, Pencil, Printer, Stethoscope } from "lucide-react";
+import { Pencil, Printer, Stethoscope } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Patient } from "@/lib/generated/prisma/client";
@@ -13,16 +13,10 @@ export async function PatientIdentity({
   patient,
   locale,
   canWrite,
-  canMerge,
-  mergedInto,
-  mergedDuplicates,
 }: {
   patient: Patient;
   locale: string;
   canWrite: boolean;
-  canMerge: boolean;
-  mergedInto: { id: string; mrn: string; name: string } | null;
-  mergedDuplicates: { id: string; mrn: string; name: string }[];
 }) {
   const t = await getTranslations("patients");
   const age = calcAge(patient.birthDate);
@@ -69,14 +63,6 @@ export async function PatientIdentity({
                 {t("printForm")}
               </Link>
             </Button>
-            {canMerge && (
-              <Button asChild variant="outline" size="sm">
-                <Link href={`/patients/merges/new?primary=${patient.id}`}>
-                  <GitMerge />
-                  {t("merge")}
-                </Link>
-              </Button>
-            )}
             {canWrite && (
               <Button asChild variant="outline" size="sm">
                 <Link href={`/patients/${patient.id}/edit`}>
@@ -89,32 +75,6 @@ export async function PatientIdentity({
           </div>
         </div>
 
-        {mergedInto && (
-          <div className="flex flex-wrap items-center gap-2 rounded-lg border border-warning/40 bg-warning/5 px-3 py-2 text-sm">
-            <GitMerge className="size-4 text-warning" aria-hidden />
-            <span>{t("mergedIntoRecord")}</span>
-            <Button asChild variant="link" size="sm" className="h-auto p-0">
-              <Link href={`/patients/${mergedInto.id}`} className="font-mono">
-                {mergedInto.mrn}
-              </Link>
-            </Button>
-            <span className="text-muted-foreground">{mergedInto.name}</span>
-          </div>
-        )}
-
-        {mergedDuplicates.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 rounded-lg border px-3 py-2 text-sm">
-            <GitMerge className="size-4 text-muted-foreground" aria-hidden />
-            <span className="text-muted-foreground">{t("mergedRecords")}</span>
-            {mergedDuplicates.map((d) => (
-              <Button asChild key={d.id} variant="link" size="sm" className="h-auto p-0">
-                <Link href={`/patients/${d.id}`} className="font-mono">
-                  {d.mrn}
-                </Link>
-              </Button>
-            ))}
-          </div>
-        )}
       </CardContent>
     </Card>
   );

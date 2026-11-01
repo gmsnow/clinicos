@@ -26,7 +26,6 @@ const TONE: Record<string, string> = {
   followup: "var(--info)",
   referrals: "var(--chart-4)",
   audit: "var(--muted-foreground)",
-  merges: "var(--violet)",
 } as const;
 
 export function PatientProfileTabs({

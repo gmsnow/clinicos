@@ -39,44 +39,13 @@ export default async function PatientDetailPage({
 
   await recordPatientView(patient.id);
 
-  const [counts, canAdmin, canClinical, canSign, canAudit, canMerge, mergedInto, mergedDuplicates] =
-    await Promise.all([
-      getProfileCounts(clinicId, id),
-      can(user, "patients:write"),
-      can(user, "encounters:write"),
-      can(user, "encounters:sign"),
-      can(user, "audit:read"),
-      can(user, "patients:merge"),
-      patient.mergedIntoId
-        ? prisma.patient.findFirst({
-            where: { id: patient.mergedIntoId, clinicId },
-            select: {
-              id: true,
-              mrn: true,
-              firstNameAr: true,
-              secondNameAr: true,
-              lastNameAr: true,
-            },
-          })
-        : Promise.resolve(null),
-      prisma.patient.findMany({
-        where: { mergedIntoId: id, clinicId },
-        select: {
-          id: true,
-          mrn: true,
-          firstNameAr: true,
-          secondNameAr: true,
-          lastNameAr: true,
-        },
-        orderBy: { createdAt: "asc" },
-      }),
-    ]);
-
-  const nameOf = (p: {
-    firstNameAr: string;
-    secondNameAr: string | null;
-    lastNameAr: string;
-  }) => [p.firstNameAr, p.secondNameAr, p.lastNameAr].filter(Boolean).join(" ");
+  const [counts, canAdmin, canClinical, canSign, canAudit] = await Promise.all([
+    getProfileCounts(clinicId, id),
+    can(user, "patients:write"),
+    can(user, "encounters:write"),
+    can(user, "encounters:sign"),
+    can(user, "audit:read"),
+  ]);
 
     return (
       <div className="flex flex-col gap-6">
@@ -84,9 +53,6 @@ export default async function PatientDetailPage({
           patient={patient}
           locale={locale}
           canWrite={canAdmin}
-          canMerge={canMerge}
-          mergedInto={mergedInto ? { ...mergedInto, name: nameOf(mergedInto) } : null}
-          mergedDuplicates={mergedDuplicates.map((d) => ({ ...d, name: nameOf(d) }))}
         />
 
         <PatientProfileTabs active={activeTab} counts={counts} />

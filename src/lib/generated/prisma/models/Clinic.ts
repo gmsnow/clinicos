@@ -269,7 +269,6 @@ export type ClinicWhereInput = {
   sequences?: Prisma.NumberSequenceListRelationFilter
   patients?: Prisma.PatientListRelationFilter
   patientViews?: Prisma.PatientViewListRelationFilter
-  mergeRequests?: Prisma.PatientMergeRequestListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   encounters?: Prisma.EncounterListRelationFilter
   services?: Prisma.ServiceListRelationFilter
@@ -315,7 +314,6 @@ export type ClinicOrderByWithRelationInput = {
   sequences?: Prisma.NumberSequenceOrderByRelationAggregateInput
   patients?: Prisma.PatientOrderByRelationAggregateInput
   patientViews?: Prisma.PatientViewOrderByRelationAggregateInput
-  mergeRequests?: Prisma.PatientMergeRequestOrderByRelationAggregateInput
   appointments?: Prisma.AppointmentOrderByRelationAggregateInput
   encounters?: Prisma.EncounterOrderByRelationAggregateInput
   services?: Prisma.ServiceOrderByRelationAggregateInput
@@ -364,7 +362,6 @@ export type ClinicWhereUniqueInput = Prisma.AtLeast<{
   sequences?: Prisma.NumberSequenceListRelationFilter
   patients?: Prisma.PatientListRelationFilter
   patientViews?: Prisma.PatientViewListRelationFilter
-  mergeRequests?: Prisma.PatientMergeRequestListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   encounters?: Prisma.EncounterListRelationFilter
   services?: Prisma.ServiceListRelationFilter
@@ -452,7 +449,6 @@ export type ClinicCreateInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -498,7 +494,6 @@ export type ClinicUncheckedCreateInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -544,7 +539,6 @@ export type ClinicUpdateInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -590,7 +584,6 @@ export type ClinicUncheckedUpdateInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -936,20 +929,6 @@ export type ClinicUpdateOneRequiredWithoutPatientViewsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClinicUpdateToOneWithWhereWithoutPatientViewsInput, Prisma.ClinicUpdateWithoutPatientViewsInput>, Prisma.ClinicUncheckedUpdateWithoutPatientViewsInput>
 }
 
-export type ClinicCreateNestedOneWithoutMergeRequestsInput = {
-  create?: Prisma.XOR<Prisma.ClinicCreateWithoutMergeRequestsInput, Prisma.ClinicUncheckedCreateWithoutMergeRequestsInput>
-  connectOrCreate?: Prisma.ClinicCreateOrConnectWithoutMergeRequestsInput
-  connect?: Prisma.ClinicWhereUniqueInput
-}
-
-export type ClinicUpdateOneRequiredWithoutMergeRequestsNestedInput = {
-  create?: Prisma.XOR<Prisma.ClinicCreateWithoutMergeRequestsInput, Prisma.ClinicUncheckedCreateWithoutMergeRequestsInput>
-  connectOrCreate?: Prisma.ClinicCreateOrConnectWithoutMergeRequestsInput
-  upsert?: Prisma.ClinicUpsertWithoutMergeRequestsInput
-  connect?: Prisma.ClinicWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ClinicUpdateToOneWithWhereWithoutMergeRequestsInput, Prisma.ClinicUpdateWithoutMergeRequestsInput>, Prisma.ClinicUncheckedUpdateWithoutMergeRequestsInput>
-}
-
 export type ClinicCreateNestedOneWithoutAppointmentsInput = {
   create?: Prisma.XOR<Prisma.ClinicCreateWithoutAppointmentsInput, Prisma.ClinicUncheckedCreateWithoutAppointmentsInput>
   connectOrCreate?: Prisma.ClinicCreateOrConnectWithoutAppointmentsInput
@@ -1141,7 +1120,6 @@ export type ClinicCreateWithoutExpensesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -1186,7 +1164,6 @@ export type ClinicUncheckedCreateWithoutExpensesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -1247,7 +1224,6 @@ export type ClinicUpdateWithoutExpensesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -1292,7 +1268,6 @@ export type ClinicUncheckedUpdateWithoutExpensesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -1337,7 +1312,6 @@ export type ClinicCreateWithoutAdvancesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -1382,7 +1356,6 @@ export type ClinicUncheckedCreateWithoutAdvancesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -1443,7 +1416,6 @@ export type ClinicUpdateWithoutAdvancesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -1488,7 +1460,6 @@ export type ClinicUncheckedUpdateWithoutAdvancesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -1532,7 +1503,6 @@ export type ClinicCreateWithoutBranchesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -1577,7 +1547,6 @@ export type ClinicUncheckedCreateWithoutBranchesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -1638,7 +1607,6 @@ export type ClinicUpdateWithoutBranchesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -1683,7 +1651,6 @@ export type ClinicUncheckedUpdateWithoutBranchesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -1728,7 +1695,6 @@ export type ClinicCreateWithoutDepartmentsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -1773,7 +1739,6 @@ export type ClinicUncheckedCreateWithoutDepartmentsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -1834,7 +1799,6 @@ export type ClinicUpdateWithoutDepartmentsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -1879,7 +1843,6 @@ export type ClinicUncheckedUpdateWithoutDepartmentsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -1924,7 +1887,6 @@ export type ClinicCreateWithoutRoomsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -1969,7 +1931,6 @@ export type ClinicUncheckedCreateWithoutRoomsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -2030,7 +1991,6 @@ export type ClinicUpdateWithoutRoomsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -2075,7 +2035,6 @@ export type ClinicUncheckedUpdateWithoutRoomsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -2120,7 +2079,6 @@ export type ClinicCreateWithoutResourcesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -2165,7 +2123,6 @@ export type ClinicUncheckedCreateWithoutResourcesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -2226,7 +2183,6 @@ export type ClinicUpdateWithoutResourcesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -2271,7 +2227,6 @@ export type ClinicUncheckedUpdateWithoutResourcesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -2317,7 +2272,6 @@ export type ClinicCreateWithoutResourceBookingsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -2362,7 +2316,6 @@ export type ClinicUncheckedCreateWithoutResourceBookingsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -2423,7 +2376,6 @@ export type ClinicUpdateWithoutResourceBookingsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -2468,7 +2420,6 @@ export type ClinicUncheckedUpdateWithoutResourceBookingsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -2513,7 +2464,6 @@ export type ClinicCreateWithoutMaintenanceSchedulesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -2558,7 +2508,6 @@ export type ClinicUncheckedCreateWithoutMaintenanceSchedulesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -2619,7 +2568,6 @@ export type ClinicUpdateWithoutMaintenanceSchedulesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -2664,7 +2612,6 @@ export type ClinicUncheckedUpdateWithoutMaintenanceSchedulesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -2709,7 +2656,6 @@ export type ClinicCreateWithoutEquipmentUsageInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -2754,7 +2700,6 @@ export type ClinicUncheckedCreateWithoutEquipmentUsageInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -2815,7 +2760,6 @@ export type ClinicUpdateWithoutEquipmentUsageInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -2860,7 +2804,6 @@ export type ClinicUncheckedUpdateWithoutEquipmentUsageInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -2905,7 +2848,6 @@ export type ClinicCreateWithoutBranchPriceOverridesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -2950,7 +2892,6 @@ export type ClinicUncheckedCreateWithoutBranchPriceOverridesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -3011,7 +2952,6 @@ export type ClinicUpdateWithoutBranchPriceOverridesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -3056,7 +2996,6 @@ export type ClinicUncheckedUpdateWithoutBranchPriceOverridesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -3101,7 +3040,6 @@ export type ClinicCreateWithoutBranchReportsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -3146,7 +3084,6 @@ export type ClinicUncheckedCreateWithoutBranchReportsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -3207,7 +3144,6 @@ export type ClinicUpdateWithoutBranchReportsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -3252,7 +3188,6 @@ export type ClinicUncheckedUpdateWithoutBranchReportsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -3296,7 +3231,6 @@ export type ClinicCreateWithoutSequencesInput = {
   resources?: Prisma.ResourceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -3341,7 +3275,6 @@ export type ClinicUncheckedCreateWithoutSequencesInput = {
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -3402,7 +3335,6 @@ export type ClinicUpdateWithoutSequencesInput = {
   resources?: Prisma.ResourceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -3447,7 +3379,6 @@ export type ClinicUncheckedUpdateWithoutSequencesInput = {
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -3493,7 +3424,6 @@ export type ClinicCreateWithoutServicesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutClinicInput
@@ -3538,7 +3468,6 @@ export type ClinicUncheckedCreateWithoutServicesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutClinicInput
@@ -3599,7 +3528,6 @@ export type ClinicUpdateWithoutServicesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutClinicNestedInput
@@ -3644,7 +3572,6 @@ export type ClinicUncheckedUpdateWithoutServicesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutClinicNestedInput
@@ -3688,7 +3615,6 @@ export type ClinicCreateWithoutPatientsInput = {
   resources?: Prisma.ResourceCreateNestedManyWithoutClinicInput
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -3733,7 +3659,6 @@ export type ClinicUncheckedCreateWithoutPatientsInput = {
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClinicInput
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -3794,7 +3719,6 @@ export type ClinicUpdateWithoutPatientsInput = {
   resources?: Prisma.ResourceUpdateManyWithoutClinicNestedInput
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -3839,7 +3763,6 @@ export type ClinicUncheckedUpdateWithoutPatientsInput = {
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClinicNestedInput
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -3884,7 +3807,6 @@ export type ClinicCreateWithoutPatientViewsInput = {
   resources?: Prisma.ResourceCreateNestedManyWithoutClinicInput
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -3929,7 +3851,6 @@ export type ClinicUncheckedCreateWithoutPatientViewsInput = {
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClinicInput
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -3990,7 +3911,6 @@ export type ClinicUpdateWithoutPatientViewsInput = {
   resources?: Prisma.ResourceUpdateManyWithoutClinicNestedInput
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -4035,203 +3955,6 @@ export type ClinicUncheckedUpdateWithoutPatientViewsInput = {
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClinicNestedInput
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
-  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
-  encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
-  services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
-  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutClinicNestedInput
-  branchReports?: Prisma.BranchReportUncheckedUpdateManyWithoutClinicNestedInput
-  maintenanceSchedules?: Prisma.MaintenanceScheduleUncheckedUpdateManyWithoutClinicNestedInput
-  equipmentUsage?: Prisma.EquipmentUsageHistoryUncheckedUpdateManyWithoutClinicNestedInput
-  resourceBookings?: Prisma.ResourceBookingUncheckedUpdateManyWithoutClinicNestedInput
-  consentTemplates?: Prisma.ConsentTemplateUncheckedUpdateManyWithoutClinicNestedInput
-  consentRecords?: Prisma.ConsentRecordUncheckedUpdateManyWithoutClinicNestedInput
-  digitalSignatures?: Prisma.DigitalSignatureUncheckedUpdateManyWithoutClinicNestedInput
-  documentCategories?: Prisma.DocumentCategoryUncheckedUpdateManyWithoutClinicNestedInput
-  documents?: Prisma.DocumentUncheckedUpdateManyWithoutClinicNestedInput
-  documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutClinicNestedInput
-  visits?: Prisma.VisitUncheckedUpdateManyWithoutClinicNestedInput
-  queues?: Prisma.QueueUncheckedUpdateManyWithoutClinicNestedInput
-  queueEntries?: Prisma.QueueEntryUncheckedUpdateManyWithoutClinicNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutClinicNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutClinicNestedInput
-  advances?: Prisma.AdvanceUncheckedUpdateManyWithoutClinicNestedInput
-}
-
-export type ClinicCreateWithoutMergeRequestsInput = {
-  id?: string
-  code: string
-  nameAr: string
-  nameEn: string
-  phone?: string | null
-  email?: string | null
-  address?: string | null
-  currency?: string
-  timezone?: string
-  locale?: string
-  dateFormat?: string
-  logoUrl?: string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  branches?: Prisma.BranchCreateNestedManyWithoutClinicInput
-  departments?: Prisma.DepartmentCreateNestedManyWithoutClinicInput
-  rooms?: Prisma.RoomCreateNestedManyWithoutClinicInput
-  resources?: Prisma.ResourceCreateNestedManyWithoutClinicInput
-  sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
-  patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
-  patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
-  encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
-  services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
-  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutClinicInput
-  branchReports?: Prisma.BranchReportCreateNestedManyWithoutClinicInput
-  maintenanceSchedules?: Prisma.MaintenanceScheduleCreateNestedManyWithoutClinicInput
-  equipmentUsage?: Prisma.EquipmentUsageHistoryCreateNestedManyWithoutClinicInput
-  resourceBookings?: Prisma.ResourceBookingCreateNestedManyWithoutClinicInput
-  consentTemplates?: Prisma.ConsentTemplateCreateNestedManyWithoutClinicInput
-  consentRecords?: Prisma.ConsentRecordCreateNestedManyWithoutClinicInput
-  digitalSignatures?: Prisma.DigitalSignatureCreateNestedManyWithoutClinicInput
-  documentCategories?: Prisma.DocumentCategoryCreateNestedManyWithoutClinicInput
-  documents?: Prisma.DocumentCreateNestedManyWithoutClinicInput
-  documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutClinicInput
-  visits?: Prisma.VisitCreateNestedManyWithoutClinicInput
-  queues?: Prisma.QueueCreateNestedManyWithoutClinicInput
-  queueEntries?: Prisma.QueueEntryCreateNestedManyWithoutClinicInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutClinicInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutClinicInput
-  advances?: Prisma.AdvanceCreateNestedManyWithoutClinicInput
-}
-
-export type ClinicUncheckedCreateWithoutMergeRequestsInput = {
-  id?: string
-  code: string
-  nameAr: string
-  nameEn: string
-  phone?: string | null
-  email?: string | null
-  address?: string | null
-  currency?: string
-  timezone?: string
-  locale?: string
-  dateFormat?: string
-  logoUrl?: string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  branches?: Prisma.BranchUncheckedCreateNestedManyWithoutClinicInput
-  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutClinicInput
-  rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutClinicInput
-  resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClinicInput
-  sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
-  patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
-  patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
-  encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
-  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
-  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutClinicInput
-  branchReports?: Prisma.BranchReportUncheckedCreateNestedManyWithoutClinicInput
-  maintenanceSchedules?: Prisma.MaintenanceScheduleUncheckedCreateNestedManyWithoutClinicInput
-  equipmentUsage?: Prisma.EquipmentUsageHistoryUncheckedCreateNestedManyWithoutClinicInput
-  resourceBookings?: Prisma.ResourceBookingUncheckedCreateNestedManyWithoutClinicInput
-  consentTemplates?: Prisma.ConsentTemplateUncheckedCreateNestedManyWithoutClinicInput
-  consentRecords?: Prisma.ConsentRecordUncheckedCreateNestedManyWithoutClinicInput
-  digitalSignatures?: Prisma.DigitalSignatureUncheckedCreateNestedManyWithoutClinicInput
-  documentCategories?: Prisma.DocumentCategoryUncheckedCreateNestedManyWithoutClinicInput
-  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutClinicInput
-  documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutClinicInput
-  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClinicInput
-  queues?: Prisma.QueueUncheckedCreateNestedManyWithoutClinicInput
-  queueEntries?: Prisma.QueueEntryUncheckedCreateNestedManyWithoutClinicInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClinicInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutClinicInput
-  advances?: Prisma.AdvanceUncheckedCreateNestedManyWithoutClinicInput
-}
-
-export type ClinicCreateOrConnectWithoutMergeRequestsInput = {
-  where: Prisma.ClinicWhereUniqueInput
-  create: Prisma.XOR<Prisma.ClinicCreateWithoutMergeRequestsInput, Prisma.ClinicUncheckedCreateWithoutMergeRequestsInput>
-}
-
-export type ClinicUpsertWithoutMergeRequestsInput = {
-  update: Prisma.XOR<Prisma.ClinicUpdateWithoutMergeRequestsInput, Prisma.ClinicUncheckedUpdateWithoutMergeRequestsInput>
-  create: Prisma.XOR<Prisma.ClinicCreateWithoutMergeRequestsInput, Prisma.ClinicUncheckedCreateWithoutMergeRequestsInput>
-  where?: Prisma.ClinicWhereInput
-}
-
-export type ClinicUpdateToOneWithWhereWithoutMergeRequestsInput = {
-  where?: Prisma.ClinicWhereInput
-  data: Prisma.XOR<Prisma.ClinicUpdateWithoutMergeRequestsInput, Prisma.ClinicUncheckedUpdateWithoutMergeRequestsInput>
-}
-
-export type ClinicUpdateWithoutMergeRequestsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
-  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  locale?: Prisma.StringFieldUpdateOperationsInput | string
-  dateFormat?: Prisma.StringFieldUpdateOperationsInput | string
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  branches?: Prisma.BranchUpdateManyWithoutClinicNestedInput
-  departments?: Prisma.DepartmentUpdateManyWithoutClinicNestedInput
-  rooms?: Prisma.RoomUpdateManyWithoutClinicNestedInput
-  resources?: Prisma.ResourceUpdateManyWithoutClinicNestedInput
-  sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
-  patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
-  patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
-  encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
-  services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
-  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutClinicNestedInput
-  branchReports?: Prisma.BranchReportUpdateManyWithoutClinicNestedInput
-  maintenanceSchedules?: Prisma.MaintenanceScheduleUpdateManyWithoutClinicNestedInput
-  equipmentUsage?: Prisma.EquipmentUsageHistoryUpdateManyWithoutClinicNestedInput
-  resourceBookings?: Prisma.ResourceBookingUpdateManyWithoutClinicNestedInput
-  consentTemplates?: Prisma.ConsentTemplateUpdateManyWithoutClinicNestedInput
-  consentRecords?: Prisma.ConsentRecordUpdateManyWithoutClinicNestedInput
-  digitalSignatures?: Prisma.DigitalSignatureUpdateManyWithoutClinicNestedInput
-  documentCategories?: Prisma.DocumentCategoryUpdateManyWithoutClinicNestedInput
-  documents?: Prisma.DocumentUpdateManyWithoutClinicNestedInput
-  documentVersions?: Prisma.DocumentVersionUpdateManyWithoutClinicNestedInput
-  visits?: Prisma.VisitUpdateManyWithoutClinicNestedInput
-  queues?: Prisma.QueueUpdateManyWithoutClinicNestedInput
-  queueEntries?: Prisma.QueueEntryUpdateManyWithoutClinicNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutClinicNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutClinicNestedInput
-  advances?: Prisma.AdvanceUpdateManyWithoutClinicNestedInput
-}
-
-export type ClinicUncheckedUpdateWithoutMergeRequestsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
-  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  locale?: Prisma.StringFieldUpdateOperationsInput | string
-  dateFormat?: Prisma.StringFieldUpdateOperationsInput | string
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  branches?: Prisma.BranchUncheckedUpdateManyWithoutClinicNestedInput
-  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutClinicNestedInput
-  rooms?: Prisma.RoomUncheckedUpdateManyWithoutClinicNestedInput
-  resources?: Prisma.ResourceUncheckedUpdateManyWithoutClinicNestedInput
-  sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
-  patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
-  patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -4277,7 +4000,6 @@ export type ClinicCreateWithoutAppointmentsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutClinicInput
@@ -4322,7 +4044,6 @@ export type ClinicUncheckedCreateWithoutAppointmentsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutClinicInput
@@ -4383,7 +4104,6 @@ export type ClinicUpdateWithoutAppointmentsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutClinicNestedInput
@@ -4428,7 +4148,6 @@ export type ClinicUncheckedUpdateWithoutAppointmentsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutClinicNestedInput
@@ -4473,7 +4192,6 @@ export type ClinicCreateWithoutEncountersInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutClinicInput
@@ -4518,7 +4236,6 @@ export type ClinicUncheckedCreateWithoutEncountersInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutClinicInput
@@ -4579,7 +4296,6 @@ export type ClinicUpdateWithoutEncountersInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutClinicNestedInput
@@ -4624,7 +4340,6 @@ export type ClinicUncheckedUpdateWithoutEncountersInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutClinicNestedInput
@@ -4669,7 +4384,6 @@ export type ClinicCreateWithoutVisitsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -4714,7 +4428,6 @@ export type ClinicUncheckedCreateWithoutVisitsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -4775,7 +4488,6 @@ export type ClinicUpdateWithoutVisitsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -4820,7 +4532,6 @@ export type ClinicUncheckedUpdateWithoutVisitsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -4865,7 +4576,6 @@ export type ClinicCreateWithoutQueuesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -4910,7 +4620,6 @@ export type ClinicUncheckedCreateWithoutQueuesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -4971,7 +4680,6 @@ export type ClinicUpdateWithoutQueuesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -5016,7 +4724,6 @@ export type ClinicUncheckedUpdateWithoutQueuesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -5061,7 +4768,6 @@ export type ClinicCreateWithoutQueueEntriesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -5106,7 +4812,6 @@ export type ClinicUncheckedCreateWithoutQueueEntriesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -5167,7 +4872,6 @@ export type ClinicUpdateWithoutQueueEntriesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -5212,7 +4916,6 @@ export type ClinicUncheckedUpdateWithoutQueueEntriesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -5257,7 +4960,6 @@ export type ClinicCreateWithoutConsentTemplatesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -5302,7 +5004,6 @@ export type ClinicUncheckedCreateWithoutConsentTemplatesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -5363,7 +5064,6 @@ export type ClinicUpdateWithoutConsentTemplatesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -5408,7 +5108,6 @@ export type ClinicUncheckedUpdateWithoutConsentTemplatesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -5453,7 +5152,6 @@ export type ClinicCreateWithoutConsentRecordsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -5498,7 +5196,6 @@ export type ClinicUncheckedCreateWithoutConsentRecordsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -5559,7 +5256,6 @@ export type ClinicUpdateWithoutConsentRecordsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -5604,7 +5300,6 @@ export type ClinicUncheckedUpdateWithoutConsentRecordsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -5649,7 +5344,6 @@ export type ClinicCreateWithoutDigitalSignaturesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -5694,7 +5388,6 @@ export type ClinicUncheckedCreateWithoutDigitalSignaturesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -5755,7 +5448,6 @@ export type ClinicUpdateWithoutDigitalSignaturesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -5800,7 +5492,6 @@ export type ClinicUncheckedUpdateWithoutDigitalSignaturesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -5845,7 +5536,6 @@ export type ClinicCreateWithoutDocumentCategoriesInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -5890,7 +5580,6 @@ export type ClinicUncheckedCreateWithoutDocumentCategoriesInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -5951,7 +5640,6 @@ export type ClinicUpdateWithoutDocumentCategoriesInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -5996,7 +5684,6 @@ export type ClinicUncheckedUpdateWithoutDocumentCategoriesInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -6041,7 +5728,6 @@ export type ClinicCreateWithoutDocumentsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -6086,7 +5772,6 @@ export type ClinicUncheckedCreateWithoutDocumentsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -6147,7 +5832,6 @@ export type ClinicUpdateWithoutDocumentsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -6192,7 +5876,6 @@ export type ClinicUncheckedUpdateWithoutDocumentsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -6237,7 +5920,6 @@ export type ClinicCreateWithoutDocumentVersionsInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -6282,7 +5964,6 @@ export type ClinicUncheckedCreateWithoutDocumentVersionsInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -6343,7 +6024,6 @@ export type ClinicUpdateWithoutDocumentVersionsInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -6388,7 +6068,6 @@ export type ClinicUncheckedUpdateWithoutDocumentVersionsInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -6433,7 +6112,6 @@ export type ClinicCreateWithoutTasksInput = {
   sequences?: Prisma.NumberSequenceCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceCreateNestedManyWithoutClinicInput
@@ -6478,7 +6156,6 @@ export type ClinicUncheckedCreateWithoutTasksInput = {
   sequences?: Prisma.NumberSequenceUncheckedCreateNestedManyWithoutClinicInput
   patients?: Prisma.PatientUncheckedCreateNestedManyWithoutClinicInput
   patientViews?: Prisma.PatientViewUncheckedCreateNestedManyWithoutClinicInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedCreateNestedManyWithoutClinicInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClinicInput
   encounters?: Prisma.EncounterUncheckedCreateNestedManyWithoutClinicInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutClinicInput
@@ -6539,7 +6216,6 @@ export type ClinicUpdateWithoutTasksInput = {
   sequences?: Prisma.NumberSequenceUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUpdateManyWithoutClinicNestedInput
@@ -6584,7 +6260,6 @@ export type ClinicUncheckedUpdateWithoutTasksInput = {
   sequences?: Prisma.NumberSequenceUncheckedUpdateManyWithoutClinicNestedInput
   patients?: Prisma.PatientUncheckedUpdateManyWithoutClinicNestedInput
   patientViews?: Prisma.PatientViewUncheckedUpdateManyWithoutClinicNestedInput
-  mergeRequests?: Prisma.PatientMergeRequestUncheckedUpdateManyWithoutClinicNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClinicNestedInput
   encounters?: Prisma.EncounterUncheckedUpdateManyWithoutClinicNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutClinicNestedInput
@@ -6619,7 +6294,6 @@ export type ClinicCountOutputType = {
   sequences: number
   patients: number
   patientViews: number
-  mergeRequests: number
   appointments: number
   encounters: number
   services: number
@@ -6650,7 +6324,6 @@ export type ClinicCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   sequences?: boolean | ClinicCountOutputTypeCountSequencesArgs
   patients?: boolean | ClinicCountOutputTypeCountPatientsArgs
   patientViews?: boolean | ClinicCountOutputTypeCountPatientViewsArgs
-  mergeRequests?: boolean | ClinicCountOutputTypeCountMergeRequestsArgs
   appointments?: boolean | ClinicCountOutputTypeCountAppointmentsArgs
   encounters?: boolean | ClinicCountOutputTypeCountEncountersArgs
   services?: boolean | ClinicCountOutputTypeCountServicesArgs
@@ -6730,13 +6403,6 @@ export type ClinicCountOutputTypeCountPatientsArgs<ExtArgs extends runtime.Types
  */
 export type ClinicCountOutputTypeCountPatientViewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PatientViewWhereInput
-}
-
-/**
- * ClinicCountOutputType without action
- */
-export type ClinicCountOutputTypeCountMergeRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PatientMergeRequestWhereInput
 }
 
 /**
@@ -6903,7 +6569,6 @@ export type ClinicSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   sequences?: boolean | Prisma.Clinic$sequencesArgs<ExtArgs>
   patients?: boolean | Prisma.Clinic$patientsArgs<ExtArgs>
   patientViews?: boolean | Prisma.Clinic$patientViewsArgs<ExtArgs>
-  mergeRequests?: boolean | Prisma.Clinic$mergeRequestsArgs<ExtArgs>
   appointments?: boolean | Prisma.Clinic$appointmentsArgs<ExtArgs>
   encounters?: boolean | Prisma.Clinic$encountersArgs<ExtArgs>
   services?: boolean | Prisma.Clinic$servicesArgs<ExtArgs>
@@ -6990,7 +6655,6 @@ export type ClinicInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   sequences?: boolean | Prisma.Clinic$sequencesArgs<ExtArgs>
   patients?: boolean | Prisma.Clinic$patientsArgs<ExtArgs>
   patientViews?: boolean | Prisma.Clinic$patientViewsArgs<ExtArgs>
-  mergeRequests?: boolean | Prisma.Clinic$mergeRequestsArgs<ExtArgs>
   appointments?: boolean | Prisma.Clinic$appointmentsArgs<ExtArgs>
   encounters?: boolean | Prisma.Clinic$encountersArgs<ExtArgs>
   services?: boolean | Prisma.Clinic$servicesArgs<ExtArgs>
@@ -7026,7 +6690,6 @@ export type $ClinicPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     sequences: Prisma.$NumberSequencePayload<ExtArgs>[]
     patients: Prisma.$PatientPayload<ExtArgs>[]
     patientViews: Prisma.$PatientViewPayload<ExtArgs>[]
-    mergeRequests: Prisma.$PatientMergeRequestPayload<ExtArgs>[]
     appointments: Prisma.$AppointmentPayload<ExtArgs>[]
     encounters: Prisma.$EncounterPayload<ExtArgs>[]
     services: Prisma.$ServicePayload<ExtArgs>[]
@@ -7465,7 +7128,6 @@ export interface Prisma__ClinicClient<T, Null = never, ExtArgs extends runtime.T
   sequences<T extends Prisma.Clinic$sequencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$sequencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NumberSequencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   patients<T extends Prisma.Clinic$patientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$patientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   patientViews<T extends Prisma.Clinic$patientViewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$patientViewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatientViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  mergeRequests<T extends Prisma.Clinic$mergeRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$mergeRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatientMergeRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   appointments<T extends Prisma.Clinic$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   encounters<T extends Prisma.Clinic$encountersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$encountersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EncounterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   services<T extends Prisma.Clinic$servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clinic$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8088,30 +7750,6 @@ export type Clinic$patientViewsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.PatientViewScalarFieldEnum | Prisma.PatientViewScalarFieldEnum[]
-}
-
-/**
- * Clinic.mergeRequests
- */
-export type Clinic$mergeRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PatientMergeRequest
-   */
-  select?: Prisma.PatientMergeRequestSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PatientMergeRequest
-   */
-  omit?: Prisma.PatientMergeRequestOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PatientMergeRequestInclude<ExtArgs> | null
-  where?: Prisma.PatientMergeRequestWhereInput
-  orderBy?: Prisma.PatientMergeRequestOrderByWithRelationInput | Prisma.PatientMergeRequestOrderByWithRelationInput[]
-  cursor?: Prisma.PatientMergeRequestWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PatientMergeRequestScalarFieldEnum | Prisma.PatientMergeRequestScalarFieldEnum[]
 }
 
 /**

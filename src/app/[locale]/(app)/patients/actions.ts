@@ -40,7 +40,7 @@ export type DeletePatientResult =
   | { ok: true; id: string }
   | {
       ok: false;
-      error: "no-clinic" | "not-found" | "has-history" | "has-merges";
+      error: "no-clinic" | "not-found" | "has-history";
       counts?: { encounters: number; visits: number; invoices: number };
     };
 
@@ -335,13 +335,6 @@ export async function deletePatient(
           counts: { encounters, visits, invoices },
         };
       }
-    }
-
-    const pendingMerges = await prisma.patientMergeRequest.count({
-      where: { clinicId, primaryId: id, status: "PENDING" },
-    });
-    if (pendingMerges > 0 && !options?.force) {
-      return { ok: false, error: "has-merges" };
     }
 
     await prisma.patient.delete({ where: { id } });

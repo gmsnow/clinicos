@@ -423,7 +423,6 @@ export const ModelName = {
   Service: 'Service',
   Patient: 'Patient',
   PatientView: 'PatientView',
-  PatientMergeRequest: 'PatientMergeRequest',
   Appointment: 'Appointment',
   Encounter: 'Encounter',
   Visit: 'Visit',
@@ -492,7 +491,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "expense" | "advance" | "session" | "account" | "verification" | "role" | "permission" | "userPermission" | "rolePermission" | "auditLog" | "systemSetting" | "clinic" | "branch" | "department" | "room" | "resource" | "resourceBooking" | "maintenanceSchedule" | "equipmentUsageHistory" | "branchPriceOverride" | "branchReport" | "numberSequence" | "service" | "patient" | "patientView" | "patientMergeRequest" | "appointment" | "encounter" | "visit" | "queue" | "queueEntry" | "encounterDiagnosis" | "medicalOrder" | "labTest" | "labRequest" | "labResult" | "imagingRequest" | "labSpecimen" | "labCriticalAlert" | "imagingReportApproval" | "dispensation" | "inventoryItem" | "inventoryMovement" | "invoice" | "invoiceItem" | "payment" | "medicalHistory" | "allergy" | "procedure" | "patientDocument" | "referral" | "consentForm" | "consentTemplate" | "consentRecord" | "digitalSignature" | "documentCategory" | "document" | "documentVersion" | "diagnosisCatalog" | "diagnosisAmendment" | "drugCatalog" | "drugInteraction" | "prescriptionAlert" | "medicationReconciliation" | "reconciliationItem" | "encounterSignature" | "encounterAmendment" | "clinicalTemplate" | "encounterTemplateUsage" | "notificationTemplate" | "notification" | "notificationDeliveryLog" | "notificationPreference" | "notificationConsent" | "notificationRetryPolicy" | "vitalSign" | "vitalAlertRule" | "vitalAlert" | "task"
+    modelProps: "user" | "expense" | "advance" | "session" | "account" | "verification" | "role" | "permission" | "userPermission" | "rolePermission" | "auditLog" | "systemSetting" | "clinic" | "branch" | "department" | "room" | "resource" | "resourceBooking" | "maintenanceSchedule" | "equipmentUsageHistory" | "branchPriceOverride" | "branchReport" | "numberSequence" | "service" | "patient" | "patientView" | "appointment" | "encounter" | "visit" | "queue" | "queueEntry" | "encounterDiagnosis" | "medicalOrder" | "labTest" | "labRequest" | "labResult" | "imagingRequest" | "labSpecimen" | "labCriticalAlert" | "imagingReportApproval" | "dispensation" | "inventoryItem" | "inventoryMovement" | "invoice" | "invoiceItem" | "payment" | "medicalHistory" | "allergy" | "procedure" | "patientDocument" | "referral" | "consentForm" | "consentTemplate" | "consentRecord" | "digitalSignature" | "documentCategory" | "document" | "documentVersion" | "diagnosisCatalog" | "diagnosisAmendment" | "drugCatalog" | "drugInteraction" | "prescriptionAlert" | "medicationReconciliation" | "reconciliationItem" | "encounterSignature" | "encounterAmendment" | "clinicalTemplate" | "encounterTemplateUsage" | "notificationTemplate" | "notification" | "notificationDeliveryLog" | "notificationPreference" | "notificationConsent" | "notificationRetryPolicy" | "vitalSign" | "vitalAlertRule" | "vitalAlert" | "task"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2417,80 +2416,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PatientViewCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PatientViewCountAggregateOutputType> | number
-        }
-      }
-    }
-    PatientMergeRequest: {
-      payload: Prisma.$PatientMergeRequestPayload<ExtArgs>
-      fields: Prisma.PatientMergeRequestFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.PatientMergeRequestFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.PatientMergeRequestFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>
-        }
-        findFirst: {
-          args: Prisma.PatientMergeRequestFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.PatientMergeRequestFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>
-        }
-        findMany: {
-          args: Prisma.PatientMergeRequestFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>[]
-        }
-        create: {
-          args: Prisma.PatientMergeRequestCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>
-        }
-        createMany: {
-          args: Prisma.PatientMergeRequestCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.PatientMergeRequestCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>[]
-        }
-        delete: {
-          args: Prisma.PatientMergeRequestDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>
-        }
-        update: {
-          args: Prisma.PatientMergeRequestUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>
-        }
-        deleteMany: {
-          args: Prisma.PatientMergeRequestDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.PatientMergeRequestUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.PatientMergeRequestUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>[]
-        }
-        upsert: {
-          args: Prisma.PatientMergeRequestUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PatientMergeRequestPayload>
-        }
-        aggregate: {
-          args: Prisma.PatientMergeRequestAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePatientMergeRequest>
-        }
-        groupBy: {
-          args: Prisma.PatientMergeRequestGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PatientMergeRequestGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.PatientMergeRequestCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PatientMergeRequestCountAggregateOutputType> | number
         }
       }
     }
@@ -6882,7 +6807,6 @@ export const PatientScalarFieldEnum = {
   status: 'status',
   createdBy: 'createdBy',
   updatedBy: 'updatedBy',
-  mergedIntoId: 'mergedIntoId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -6899,24 +6823,6 @@ export const PatientViewScalarFieldEnum = {
 } as const
 
 export type PatientViewScalarFieldEnum = (typeof PatientViewScalarFieldEnum)[keyof typeof PatientViewScalarFieldEnum]
-
-
-export const PatientMergeRequestScalarFieldEnum = {
-  id: 'id',
-  clinicId: 'clinicId',
-  primaryId: 'primaryId',
-  duplicateIds: 'duplicateIds',
-  reason: 'reason',
-  status: 'status',
-  requestedById: 'requestedById',
-  approvedById: 'approvedById',
-  decidedAt: 'decidedAt',
-  snapshot: 'snapshot',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PatientMergeRequestScalarFieldEnum = (typeof PatientMergeRequestScalarFieldEnum)[keyof typeof PatientMergeRequestScalarFieldEnum]
 
 
 export const AppointmentScalarFieldEnum = {
@@ -8394,20 +8300,6 @@ export type ListEnumPatientStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
- * Reference to a field of type 'MergeRequestStatus'
- */
-export type EnumMergeRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MergeRequestStatus'>
-    
-
-
-/**
- * Reference to a field of type 'MergeRequestStatus[]'
- */
-export type ListEnumMergeRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MergeRequestStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'AppointmentType'
  */
 export type EnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType'>
@@ -9409,7 +9301,6 @@ export type GlobalOmitConfig = {
   service?: Prisma.ServiceOmit
   patient?: Prisma.PatientOmit
   patientView?: Prisma.PatientViewOmit
-  patientMergeRequest?: Prisma.PatientMergeRequestOmit
   appointment?: Prisma.AppointmentOmit
   encounter?: Prisma.EncounterOmit
   visit?: Prisma.VisitOmit

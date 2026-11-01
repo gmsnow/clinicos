@@ -21,3 +21,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+/** GET /api/notifications/process - Vercel cron compatible entrypoint */
+export async function GET(request: NextRequest) {
+  return POST(request);
+}

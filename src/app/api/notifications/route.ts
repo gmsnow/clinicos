@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePermission } from "@/core/auth/session";
+import { can } from "@/core/rbac";
 import { prisma } from "@/lib/db";
 import type { NotificationChannel, NotificationCategory, NotificationPriority } from "@/lib/generated/prisma/client";
 
@@ -65,6 +66,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const isInApp = channel === "IN_APP";
+    const now = new Date();
+
     // Create notification
     const notification = await prisma.notification.create({
       data: {
@@ -73,13 +77,15 @@ export async function POST(request: NextRequest) {
         category,
         channel,
         priority,
-        status: "PENDING",
+        status: isInApp ? "SENT" : "PENDING",
         recipientId,
         recipientType,
         subject,
         body,
         data,
         scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
+        sentAt: isInApp ? now : null,
+        deliveredAt: isInApp ? now : null,
         maxRetries,
       },
     });
@@ -113,17 +119,25 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get("category");
     const channel = searchParams.get("channel");
     const recipientId = searchParams.get("recipientId");
+    const scope = searchParams.get("scope");
     const fromDate = searchParams.get("fromDate");
     const toDate = searchParams.get("toDate");
 
-    const where: Record<string, unknown> = {
-      clinicId: user.currentClinicId,
-    };
+    const clinicId = user.currentClinicId;
+    if (!clinicId) {
+      return NextResponse.json({ error: "No clinic context" }, { status: 400 });
+    }
+
+    const where: Record<string, unknown> = { clinicId };
 
     if (status) where.status = status;
     if (category) where.category = category;
     if (channel) where.channel = channel;
-    if (recipientId) where.recipientId = recipientId;
+    if (recipientId) {
+      where.recipientId = recipientId;
+    } else if (!(scope === "clinic" && (await can(user, "notifications:manage")))) {
+      where.recipientId = user.id;
+    }
     if (fromDate || toDate) {
       where.createdAt = {};
       if (fromDate) (where.createdAt as Record<string, Date>).gte = new Date(fromDate);

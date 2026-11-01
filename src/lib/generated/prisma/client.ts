@@ -172,11 +172,6 @@ export type Patient = Prisma.PatientModel
  */
 export type PatientView = Prisma.PatientViewModel
 /**
- * Model PatientMergeRequest
- * 
- */
-export type PatientMergeRequest = Prisma.PatientMergeRequestModel
-/**
  * Model Appointment
  * 
  */

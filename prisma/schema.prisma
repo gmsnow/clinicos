@@ -246,7 +246,6 @@ model Clinic {
   sequences            NumberSequence[]
   patients             Patient[]
   patientViews         PatientView[]
-  mergeRequests        PatientMergeRequest[]
   appointments         Appointment[]
   encounters           Encounter[]
   services             Service[]
@@ -732,10 +731,6 @@ procedures             Procedure[]
   referrals             Referral[]
   consents              ConsentForm[]
   consentRecords        ConsentRecord[]
-  mergedIntoId          String?
-  mergedInto            Patient?              @relation("PatientMerge", fields: [mergedIntoId], references: [id], onDelete: SetNull)
-  mergedDuplicates      Patient[]             @relation("PatientMerge")
-  mergeRequests         PatientMergeRequest[] @relation("MergePrimary")
   views                 PatientView[]
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
@@ -750,15 +745,8 @@ procedures             Procedure[]
 }
 
 // ---------------------------------------------------------------------------
-// Patient identity integrity: views, duplicate detection, merge workflow
+// Patient identity integrity: views and duplicate detection
 // ---------------------------------------------------------------------------
-
-enum MergeRequestStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  APPLIED
-}
 
 model PatientView {
   id        String   @id @default(cuid())
@@ -772,26 +760,6 @@ model PatientView {
 
   @@unique([userId, patientId])
   @@index([clinicId, viewedAt(sort: Desc)])
-}
-
-model PatientMergeRequest {
-  id            String             @id @default(cuid())
-  clinicId      String
-  clinic        Clinic             @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-  primaryId     String
-  primary       Patient            @relation("MergePrimary", fields: [primaryId], references: [id], onDelete: Cascade)
-  duplicateIds  String[]
-  reason        String
-  status        MergeRequestStatus @default(PENDING)
-  requestedById String
-  approvedById  String?
-  decidedAt     DateTime?
-  snapshot      Json?
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
-
-  @@index([clinicId, status])
-  @@index([clinicId, createdAt(sort: Desc)])
 }
 
 // ---------------------------------------------------------------------------
@@ -2356,7 +2324,6 @@ model Notification {
   updatedAt     DateTime              @updatedAt
 
   deliveryLogs NotificationDeliveryLog[]
-  preferences  NotificationPreference[]
 
   @@index([clinicId, recipientId, status, createdAt])
   @@index([clinicId, category, status])
@@ -2393,8 +2360,6 @@ model NotificationPreference {
   quietHoursEnd   String? // HH:MM
   createdAt       DateTime             @default(now())
   updatedAt       DateTime             @updatedAt
-
-  notification Notification? @relation(fields: [id], references: [id], onDelete: Cascade)
 
   @@unique([clinicId, userId, category, channel])
   @@index([clinicId, userId])

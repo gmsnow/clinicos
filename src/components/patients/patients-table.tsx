@@ -27,7 +27,6 @@ type Patient = Pick<
   | "nationalId"
   | "city"
   | "status"
-  | "mergedIntoId"
   | "createdAt"
 >;
 
@@ -99,13 +98,9 @@ export async function PatientsTable({
                   {p.createdAt.toISOString().slice(0, 10)}
                 </TableCell>
                 <TableCell>
-                  {p.mergedIntoId ? (
-                    <Badge variant="warning">{t("merged")}</Badge>
-                  ) : (
-                    <Badge variant={p.status === "ACTIVE" ? "success" : "secondary"}>
-                      {t(p.status === "ACTIVE" ? "statusActive" : "statusInactive")}
-                    </Badge>
-                  )}
+                  <Badge variant={p.status === "ACTIVE" ? "success" : "secondary"}>
+                    {t(p.status === "ACTIVE" ? "statusActive" : "statusInactive")}
+                  </Badge>
                 </TableCell>
               </TableRow>
             ))}

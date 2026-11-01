@@ -77,7 +77,6 @@ export const ModelName = {
   Service: 'Service',
   Patient: 'Patient',
   PatientView: 'PatientView',
-  PatientMergeRequest: 'PatientMergeRequest',
   Appointment: 'Appointment',
   Encounter: 'Encounter',
   Visit: 'Visit',
@@ -576,7 +575,6 @@ export const PatientScalarFieldEnum = {
   status: 'status',
   createdBy: 'createdBy',
   updatedBy: 'updatedBy',
-  mergedIntoId: 'mergedIntoId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -593,24 +591,6 @@ export const PatientViewScalarFieldEnum = {
 } as const
 
 export type PatientViewScalarFieldEnum = (typeof PatientViewScalarFieldEnum)[keyof typeof PatientViewScalarFieldEnum]
-
-
-export const PatientMergeRequestScalarFieldEnum = {
-  id: 'id',
-  clinicId: 'clinicId',
-  primaryId: 'primaryId',
-  duplicateIds: 'duplicateIds',
-  reason: 'reason',
-  status: 'status',
-  requestedById: 'requestedById',
-  approvedById: 'approvedById',
-  decidedAt: 'decidedAt',
-  snapshot: 'snapshot',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PatientMergeRequestScalarFieldEnum = (typeof PatientMergeRequestScalarFieldEnum)[keyof typeof PatientMergeRequestScalarFieldEnum]
 
 
 export const AppointmentScalarFieldEnum = {

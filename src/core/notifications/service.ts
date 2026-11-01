@@ -74,6 +74,14 @@ export class LogChannelAdapter implements NotificationChannelAdapter {
   }
 }
 
+/**
+ * Register built-in adapters. Without external provider credentials these log
+ * deliveries instead of failing, so queued notifications never get stuck.
+ */
+for (const channel of ["IN_APP", "EMAIL", "SMS", "WHATSAPP"] as NotificationChannel[]) {
+  registerChannelAdapter(new LogChannelAdapter(channel));
+}
+
 /** Get recipient information for a user/patient */
 export async function getRecipientInfo(
   recipientId: string,
@@ -262,6 +270,12 @@ export async function createNotification(
     ...(templateId ? { template: { connect: { id: templateId } } } : {}),
     deliveryLogs: deliveryLogs ? { create: deliveryLogs } : undefined,
   } as Prisma.NotificationCreateInput;
+  const isInApp = data.channel === "IN_APP";
+  if (isInApp) {
+    data.status = "SENT";
+    data.sentAt = new Date();
+    data.deliveredAt = data.sentAt;
+  }
   return prisma.notification.create({ data });
 }
 
@@ -323,7 +337,7 @@ export async function processScheduledNotifications(): Promise<{
   const notifications = await prisma.notification.findMany({
     where: {
       status: { in: ["PENDING", "QUEUED"] },
-      scheduledAt: { lte: now },
+      OR: [{ scheduledAt: null }, { scheduledAt: { lte: now } }],
     },
     take: 100,
     orderBy: { createdAt: "asc" },

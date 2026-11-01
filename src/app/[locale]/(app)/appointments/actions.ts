@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/core/auth/session";
 import { recordAudit } from "@/core/audit";
+import { notifyAppointmentEvent } from "@/core/notifications/events";
 import { prisma } from "@/lib/db";
 import type { AppointmentStatus } from "@/lib/generated/prisma/client";
 import {
@@ -93,6 +94,11 @@ export async function createAppointment(
       clinicId,
       metadata: { patientId: parsed.patientId, startTime: start.toISOString() },
     });
+    await notifyAppointmentEvent({
+      clinicId,
+      appointmentId: appointment.id,
+      kind: "created",
+    });
     revalidatePath("/appointments");
     revalidatePath("/");
     return { ok: true, id: appointment.id };
@@ -146,6 +152,7 @@ export async function updateAppointment(
     clinicId,
     metadata: { startTime: start.toISOString() },
   });
+  await notifyAppointmentEvent({ clinicId, appointmentId: id, kind: "updated" });
   revalidatePath("/appointments");
   revalidatePath(`/appointments/${id}`);
   return { ok: true, id };
@@ -181,6 +188,9 @@ export async function setAppointmentStatus(
     clinicId,
     metadata: { status, from: existing.status },
   });
+  if (status === "CANCELLED" || status === "NO_SHOW") {
+    await notifyAppointmentEvent({ clinicId, appointmentId: id, kind: "cancelled" });
+  }
   revalidatePath("/appointments");
   revalidatePath(`/appointments/${id}`);
   return { ok: true, id };

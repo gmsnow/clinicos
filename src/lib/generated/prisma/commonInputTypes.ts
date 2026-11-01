@@ -589,23 +589,6 @@ export type EnumPatientStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPatientStatusFilter<$PrismaModel>
 }
 
-export type EnumMergeRequestStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.MergeRequestStatus | Prisma.EnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMergeRequestStatusFilter<$PrismaModel> | $Enums.MergeRequestStatus
-}
-
-export type EnumMergeRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.MergeRequestStatus | Prisma.EnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMergeRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.MergeRequestStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumMergeRequestStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumMergeRequestStatusFilter<$PrismaModel>
-}
-
 export type EnumAppointmentTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.AppointmentType | Prisma.EnumAppointmentTypeFieldRefInput<$PrismaModel>
   in?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
@@ -2242,23 +2225,6 @@ export type NestedEnumPatientStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPatientStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPatientStatusFilter<$PrismaModel>
-}
-
-export type NestedEnumMergeRequestStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.MergeRequestStatus | Prisma.EnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMergeRequestStatusFilter<$PrismaModel> | $Enums.MergeRequestStatus
-}
-
-export type NestedEnumMergeRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.MergeRequestStatus | Prisma.EnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MergeRequestStatus[] | Prisma.ListEnumMergeRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMergeRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.MergeRequestStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumMergeRequestStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumMergeRequestStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumAppointmentTypeFilter<$PrismaModel = never> = {

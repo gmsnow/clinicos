@@ -14,7 +14,6 @@ import {
   loadLabResults,
   loadOverview,
   loadPatientAudit,
-  loadPatientMerges,
   loadPreviousPrescriptions,
   loadProcedures,
   loadReferrals,
@@ -38,7 +37,6 @@ import { DocumentsTab } from "@/components/patients/profile/tabs/documents-tab";
 import { BillingTab } from "@/components/patients/profile/tabs/billing-tab";
 import { ReferralsTab } from "@/components/patients/profile/tabs/referrals-tab";
 import { AuditTab } from "@/components/patients/profile/tabs/audit-tab";
-import { MergesTab } from "@/components/patients/profile/tabs/merges-tab";
 import { getTranslations } from "next-intl/server";
 
 export type ProfilePermissions = {
@@ -147,21 +145,6 @@ export async function ProfilePanel({
       }
       const items = await loadPatientAudit(clinicId, patientId);
       return <AuditTab items={items} locale={locale} canRead />;
-    }
-    case "merges": {
-      if (!permissions.admin) {
-        return <MergesTab items={[]} locale={locale} canMerge={false} isRequester={false} primaryMrn="" />;
-      }
-      const items = await loadPatientMerges(clinicId, patientId);
-      return (
-        <MergesTab
-          items={items}
-          locale={locale}
-          canMerge={permissions.admin}
-          isRequester={false}
-          primaryMrn={patient.mrn}
-        />
-      );
     }
     default:
       return null;

@@ -679,20 +679,3 @@ export function loadEncounterImagingText(clinicId: string, patientId: string) {
   );
 }
 
-export function loadPatientMerges(clinicId: string, patientId: string) {
-  return prisma.patientMergeRequest.findMany({
-    where: {
-      OR: [
-        { primaryId: patientId },
-        { duplicateIds: { has: patientId } },
-      ],
-      clinicId,
-    },
-    include: {
-      primary: { select: { id: true, mrn: true } },
-      requestedBy: { select: { name: true } },
-      approvedBy: { select: { name: true } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
-}

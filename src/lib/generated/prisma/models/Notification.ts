@@ -366,7 +366,6 @@ export type NotificationWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   template?: Prisma.XOR<Prisma.NotificationTemplateNullableScalarRelationFilter, Prisma.NotificationTemplateWhereInput> | null
   deliveryLogs?: Prisma.NotificationDeliveryLogListRelationFilter
-  preferences?: Prisma.NotificationPreferenceListRelationFilter
 }
 
 export type NotificationOrderByWithRelationInput = {
@@ -396,7 +395,6 @@ export type NotificationOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   template?: Prisma.NotificationTemplateOrderByWithRelationInput
   deliveryLogs?: Prisma.NotificationDeliveryLogOrderByRelationAggregateInput
-  preferences?: Prisma.NotificationPreferenceOrderByRelationAggregateInput
 }
 
 export type NotificationWhereUniqueInput = Prisma.AtLeast<{
@@ -429,7 +427,6 @@ export type NotificationWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   template?: Prisma.XOR<Prisma.NotificationTemplateNullableScalarRelationFilter, Prisma.NotificationTemplateWhereInput> | null
   deliveryLogs?: Prisma.NotificationDeliveryLogListRelationFilter
-  preferences?: Prisma.NotificationPreferenceListRelationFilter
 }, "id">
 
 export type NotificationOrderByWithAggregationInput = {
@@ -520,7 +517,6 @@ export type NotificationCreateInput = {
   updatedAt?: Date | string
   template?: Prisma.NotificationTemplateCreateNestedOneWithoutNotificationsInput
   deliveryLogs?: Prisma.NotificationDeliveryLogCreateNestedManyWithoutNotificationInput
-  preferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutNotificationInput
 }
 
 export type NotificationUncheckedCreateInput = {
@@ -549,7 +545,6 @@ export type NotificationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deliveryLogs?: Prisma.NotificationDeliveryLogUncheckedCreateNestedManyWithoutNotificationInput
-  preferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutNotificationInput
 }
 
 export type NotificationUpdateInput = {
@@ -578,7 +573,6 @@ export type NotificationUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   template?: Prisma.NotificationTemplateUpdateOneWithoutNotificationsNestedInput
   deliveryLogs?: Prisma.NotificationDeliveryLogUpdateManyWithoutNotificationNestedInput
-  preferences?: Prisma.NotificationPreferenceUpdateManyWithoutNotificationNestedInput
 }
 
 export type NotificationUncheckedUpdateInput = {
@@ -607,7 +601,6 @@ export type NotificationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deliveryLogs?: Prisma.NotificationDeliveryLogUncheckedUpdateManyWithoutNotificationNestedInput
-  preferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutNotificationNestedInput
 }
 
 export type NotificationCreateManyInput = {
@@ -792,11 +785,6 @@ export type NotificationScalarRelationFilter = {
   isNot?: Prisma.NotificationWhereInput
 }
 
-export type NotificationNullableScalarRelationFilter = {
-  is?: Prisma.NotificationWhereInput | null
-  isNot?: Prisma.NotificationWhereInput | null
-}
-
 export type NotificationCreateNestedManyWithoutTemplateInput = {
   create?: Prisma.XOR<Prisma.NotificationCreateWithoutTemplateInput, Prisma.NotificationUncheckedCreateWithoutTemplateInput> | Prisma.NotificationCreateWithoutTemplateInput[] | Prisma.NotificationUncheckedCreateWithoutTemplateInput[]
   connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutTemplateInput | Prisma.NotificationCreateOrConnectWithoutTemplateInput[]
@@ -861,22 +849,6 @@ export type NotificationUpdateOneRequiredWithoutDeliveryLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.NotificationUpdateToOneWithWhereWithoutDeliveryLogsInput, Prisma.NotificationUpdateWithoutDeliveryLogsInput>, Prisma.NotificationUncheckedUpdateWithoutDeliveryLogsInput>
 }
 
-export type NotificationCreateNestedOneWithoutPreferencesInput = {
-  create?: Prisma.XOR<Prisma.NotificationCreateWithoutPreferencesInput, Prisma.NotificationUncheckedCreateWithoutPreferencesInput>
-  connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutPreferencesInput
-  connect?: Prisma.NotificationWhereUniqueInput
-}
-
-export type NotificationUpdateOneWithoutPreferencesNestedInput = {
-  create?: Prisma.XOR<Prisma.NotificationCreateWithoutPreferencesInput, Prisma.NotificationUncheckedCreateWithoutPreferencesInput>
-  connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutPreferencesInput
-  upsert?: Prisma.NotificationUpsertWithoutPreferencesInput
-  disconnect?: Prisma.NotificationWhereInput | boolean
-  delete?: Prisma.NotificationWhereInput | boolean
-  connect?: Prisma.NotificationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.NotificationUpdateToOneWithWhereWithoutPreferencesInput, Prisma.NotificationUpdateWithoutPreferencesInput>, Prisma.NotificationUncheckedUpdateWithoutPreferencesInput>
-}
-
 export type NotificationCreateWithoutTemplateInput = {
   id?: string
   clinicId: string
@@ -902,7 +874,6 @@ export type NotificationCreateWithoutTemplateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deliveryLogs?: Prisma.NotificationDeliveryLogCreateNestedManyWithoutNotificationInput
-  preferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutNotificationInput
 }
 
 export type NotificationUncheckedCreateWithoutTemplateInput = {
@@ -930,7 +901,6 @@ export type NotificationUncheckedCreateWithoutTemplateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deliveryLogs?: Prisma.NotificationDeliveryLogUncheckedCreateNestedManyWithoutNotificationInput
-  preferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutNotificationInput
 }
 
 export type NotificationCreateOrConnectWithoutTemplateInput = {
@@ -1014,7 +984,6 @@ export type NotificationCreateWithoutDeliveryLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   template?: Prisma.NotificationTemplateCreateNestedOneWithoutNotificationsInput
-  preferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutNotificationInput
 }
 
 export type NotificationUncheckedCreateWithoutDeliveryLogsInput = {
@@ -1042,7 +1011,6 @@ export type NotificationUncheckedCreateWithoutDeliveryLogsInput = {
   externalData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  preferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutNotificationInput
 }
 
 export type NotificationCreateOrConnectWithoutDeliveryLogsInput = {
@@ -1086,7 +1054,6 @@ export type NotificationUpdateWithoutDeliveryLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   template?: Prisma.NotificationTemplateUpdateOneWithoutNotificationsNestedInput
-  preferences?: Prisma.NotificationPreferenceUpdateManyWithoutNotificationNestedInput
 }
 
 export type NotificationUncheckedUpdateWithoutDeliveryLogsInput = {
@@ -1114,135 +1081,6 @@ export type NotificationUncheckedUpdateWithoutDeliveryLogsInput = {
   externalData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  preferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutNotificationNestedInput
-}
-
-export type NotificationCreateWithoutPreferencesInput = {
-  id?: string
-  clinicId: string
-  category: $Enums.NotificationCategory
-  channel: $Enums.NotificationChannel
-  priority?: $Enums.NotificationPriority
-  status?: $Enums.NotificationStatus
-  recipientId: string
-  recipientType?: string
-  subject?: string | null
-  body: string
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  scheduledAt?: Date | string | null
-  sentAt?: Date | string | null
-  deliveredAt?: Date | string | null
-  readAt?: Date | string | null
-  failedAt?: Date | string | null
-  failureReason?: string | null
-  retryCount?: number
-  maxRetries?: number
-  externalId?: string | null
-  externalData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  template?: Prisma.NotificationTemplateCreateNestedOneWithoutNotificationsInput
-  deliveryLogs?: Prisma.NotificationDeliveryLogCreateNestedManyWithoutNotificationInput
-}
-
-export type NotificationUncheckedCreateWithoutPreferencesInput = {
-  id?: string
-  clinicId: string
-  templateId?: string | null
-  category: $Enums.NotificationCategory
-  channel: $Enums.NotificationChannel
-  priority?: $Enums.NotificationPriority
-  status?: $Enums.NotificationStatus
-  recipientId: string
-  recipientType?: string
-  subject?: string | null
-  body: string
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  scheduledAt?: Date | string | null
-  sentAt?: Date | string | null
-  deliveredAt?: Date | string | null
-  readAt?: Date | string | null
-  failedAt?: Date | string | null
-  failureReason?: string | null
-  retryCount?: number
-  maxRetries?: number
-  externalId?: string | null
-  externalData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deliveryLogs?: Prisma.NotificationDeliveryLogUncheckedCreateNestedManyWithoutNotificationInput
-}
-
-export type NotificationCreateOrConnectWithoutPreferencesInput = {
-  where: Prisma.NotificationWhereUniqueInput
-  create: Prisma.XOR<Prisma.NotificationCreateWithoutPreferencesInput, Prisma.NotificationUncheckedCreateWithoutPreferencesInput>
-}
-
-export type NotificationUpsertWithoutPreferencesInput = {
-  update: Prisma.XOR<Prisma.NotificationUpdateWithoutPreferencesInput, Prisma.NotificationUncheckedUpdateWithoutPreferencesInput>
-  create: Prisma.XOR<Prisma.NotificationCreateWithoutPreferencesInput, Prisma.NotificationUncheckedCreateWithoutPreferencesInput>
-  where?: Prisma.NotificationWhereInput
-}
-
-export type NotificationUpdateToOneWithWhereWithoutPreferencesInput = {
-  where?: Prisma.NotificationWhereInput
-  data: Prisma.XOR<Prisma.NotificationUpdateWithoutPreferencesInput, Prisma.NotificationUncheckedUpdateWithoutPreferencesInput>
-}
-
-export type NotificationUpdateWithoutPreferencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.EnumNotificationCategoryFieldUpdateOperationsInput | $Enums.NotificationCategory
-  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
-  priority?: Prisma.EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
-  recipientId?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.StringFieldUpdateOperationsInput | string
-  subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  body?: Prisma.StringFieldUpdateOperationsInput | string
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
-  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.NotificationTemplateUpdateOneWithoutNotificationsNestedInput
-  deliveryLogs?: Prisma.NotificationDeliveryLogUpdateManyWithoutNotificationNestedInput
-}
-
-export type NotificationUncheckedUpdateWithoutPreferencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
-  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumNotificationCategoryFieldUpdateOperationsInput | $Enums.NotificationCategory
-  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
-  priority?: Prisma.EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
-  recipientId?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.StringFieldUpdateOperationsInput | string
-  subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  body?: Prisma.StringFieldUpdateOperationsInput | string
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
-  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deliveryLogs?: Prisma.NotificationDeliveryLogUncheckedUpdateManyWithoutNotificationNestedInput
 }
 
 export type NotificationCreateManyTemplateInput = {
@@ -1296,7 +1134,6 @@ export type NotificationUpdateWithoutTemplateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deliveryLogs?: Prisma.NotificationDeliveryLogUpdateManyWithoutNotificationNestedInput
-  preferences?: Prisma.NotificationPreferenceUpdateManyWithoutNotificationNestedInput
 }
 
 export type NotificationUncheckedUpdateWithoutTemplateInput = {
@@ -1324,7 +1161,6 @@ export type NotificationUncheckedUpdateWithoutTemplateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deliveryLogs?: Prisma.NotificationDeliveryLogUncheckedUpdateManyWithoutNotificationNestedInput
-  preferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutNotificationNestedInput
 }
 
 export type NotificationUncheckedUpdateManyWithoutTemplateInput = {
@@ -1360,12 +1196,10 @@ export type NotificationUncheckedUpdateManyWithoutTemplateInput = {
 
 export type NotificationCountOutputType = {
   deliveryLogs: number
-  preferences: number
 }
 
 export type NotificationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deliveryLogs?: boolean | NotificationCountOutputTypeCountDeliveryLogsArgs
-  preferences?: boolean | NotificationCountOutputTypeCountPreferencesArgs
 }
 
 /**
@@ -1383,13 +1217,6 @@ export type NotificationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types
  */
 export type NotificationCountOutputTypeCountDeliveryLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationDeliveryLogWhereInput
-}
-
-/**
- * NotificationCountOutputType without action
- */
-export type NotificationCountOutputTypeCountPreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationPreferenceWhereInput
 }
 
 
@@ -1420,7 +1247,6 @@ export type NotificationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   updatedAt?: boolean
   template?: boolean | Prisma.Notification$templateArgs<ExtArgs>
   deliveryLogs?: boolean | Prisma.Notification$deliveryLogsArgs<ExtArgs>
-  preferences?: boolean | Prisma.Notification$preferencesArgs<ExtArgs>
   _count?: boolean | Prisma.NotificationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
@@ -1511,7 +1337,6 @@ export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type NotificationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   template?: boolean | Prisma.Notification$templateArgs<ExtArgs>
   deliveryLogs?: boolean | Prisma.Notification$deliveryLogsArgs<ExtArgs>
-  preferences?: boolean | Prisma.Notification$preferencesArgs<ExtArgs>
   _count?: boolean | Prisma.NotificationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type NotificationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1526,7 +1351,6 @@ export type $NotificationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     template: Prisma.$NotificationTemplatePayload<ExtArgs> | null
     deliveryLogs: Prisma.$NotificationDeliveryLogPayload<ExtArgs>[]
-    preferences: Prisma.$NotificationPreferencePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1949,7 +1773,6 @@ export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   template<T extends Prisma.Notification$templateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Notification$templateArgs<ExtArgs>>): Prisma.Prisma__NotificationTemplateClient<runtime.Types.Result.GetResult<Prisma.$NotificationTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deliveryLogs<T extends Prisma.Notification$deliveryLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Notification$deliveryLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationDeliveryLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  preferences<T extends Prisma.Notification$preferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Notification$preferencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2444,30 +2267,6 @@ export type Notification$deliveryLogsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.NotificationDeliveryLogScalarFieldEnum | Prisma.NotificationDeliveryLogScalarFieldEnum[]
-}
-
-/**
- * Notification.preferences
- */
-export type Notification$preferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the NotificationPreference
-   */
-  select?: Prisma.NotificationPreferenceSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the NotificationPreference
-   */
-  omit?: Prisma.NotificationPreferenceOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.NotificationPreferenceInclude<ExtArgs> | null
-  where?: Prisma.NotificationPreferenceWhereInput
-  orderBy?: Prisma.NotificationPreferenceOrderByWithRelationInput | Prisma.NotificationPreferenceOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationPreferenceWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NotificationPreferenceScalarFieldEnum | Prisma.NotificationPreferenceScalarFieldEnum[]
 }
 
 /**

@@ -130,6 +130,5 @@ export const PATIENT_SELECT = {
   nationalId: true,
   city: true,
   status: true,
-  mergedIntoId: true,
   createdAt: true,
 } satisfies Prisma.PatientSelect;

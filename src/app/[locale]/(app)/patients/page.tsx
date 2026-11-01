@@ -42,7 +42,7 @@ export default async function PatientsPage({
     registeredTo: params.registeredTo,
   });
 
-  const [patients, total, recent, pendingMerges] = await Promise.all([
+  const [patients, total, recent] = await Promise.all([
     prisma.patient.findMany({
       where,
       select: PATIENT_SELECT,
@@ -62,9 +62,6 @@ export default async function PatientsPage({
           },
         })
       : Promise.resolve([]),
-    clinicId
-      ? prisma.patientMergeRequest.count({ where: { clinicId, status: "PENDING" } })
-      : Promise.resolve(0),
   ]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));

@@ -214,16 +214,6 @@ export const City = {
 export type City = (typeof City)[keyof typeof City]
 
 
-export const MergeRequestStatus = {
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  APPLIED: 'APPLIED'
-} as const
-
-export type MergeRequestStatus = (typeof MergeRequestStatus)[keyof typeof MergeRequestStatus]
-
-
 export const AppointmentType = {
   INITIAL: 'INITIAL',
   FOLLOW_UP: 'FOLLOW_UP',

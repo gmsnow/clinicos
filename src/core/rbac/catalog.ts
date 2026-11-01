@@ -31,7 +31,7 @@ export const MODULES = [
   "notifications",
 ] as const;
 
-export const ACTIONS = ["read", "write", "sign", "order", "result", "verify", "dispense", "prescribe", "refund", "discount", "post", "manage", "report", "merge", "catalog", "perform", "amend", "send"] as const;
+export const ACTIONS = ["read", "write", "sign", "order", "result", "verify", "dispense", "prescribe", "refund", "discount", "post", "manage", "report", "catalog", "perform", "amend", "send"] as const;
 
 export type Module = (typeof MODULES)[number];
 export type Action = (typeof ACTIONS)[number];
@@ -48,7 +48,6 @@ export const PERMISSION_CATALOG: PermissionSpec[] = [
   // patients
   h("patients", "read", "عرض سجلات المرضى", "View patient records"),
   h("patients", "write", "إنشاء وتعديل سجلات المرضى", "Create/update patient records"),
-  h("patients", "merge", "دمج السجلات الطبية المكررة", "Merge duplicate patient records"),
   // appointments
   h("appointments", "read", "عرض المواعيد", "View appointments"),
   h("appointments", "write", "إدارة المواعيد", "Manage appointments"),
@@ -157,7 +156,7 @@ export type RoleCode = (typeof ROLE_CODES)[number];
 export const ROLE_PERMISSIONS: Record<RoleCode, PermissionCode[]> = {
   super_admin: PERMISSION_CATALOG.map((p) => p.code as PermissionCode),
   manager: [
-    "patients:read", "patients:write", "patients:merge",
+    "patients:read", "patients:write",
     "appointments:read", "appointments:write",
     "reception:read", "reception:write",
     "queue:read", "queue:write",

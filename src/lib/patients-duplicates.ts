@@ -61,7 +61,6 @@ export async function findDuplicateCandidates(
   const rows = await prisma.patient.findMany({
     where: {
       clinicId,
-      mergedIntoId: null,
       ...(excludeId ? { id: { not: excludeId } } : {}),
       OR: [
         ...(nationalId ? [{ nationalId: { equals: nationalId } }] : []),
