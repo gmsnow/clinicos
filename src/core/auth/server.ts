@@ -3,8 +3,11 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { username } from "better-auth/plugins";
 import { prisma } from "@/lib/db";
 
+const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+
 export const auth = betterAuth({
   baseURL:
+    (productionUrl ? `https://${productionUrl}` : undefined) ??
     process.env.BETTER_AUTH_URL ??
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
   secret: process.env.BETTER_AUTH_SECRET,

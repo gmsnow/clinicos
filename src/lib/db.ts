@@ -1,19 +1,29 @@
 import { PrismaClient } from "@/lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-function createClient() {
-  let url = process.env.DATABASE_URL || "";
-  if (url && process.env.VERCEL && url.includes(":6543")) {
-    if (!url.includes("pgbouncer=")) {
-      url = url.includes("?") ? `${url}&pgbouncer=true` : `${url}?pgbouncer=true`;
-    }
+function resolveConnectionString(raw: string): string {
+  if (!raw || !process.env.VERCEL) return raw;
+  if (!/\.pooler\.supabase\.com/.test(raw)) return raw;
+
+  try {
+    const url = new URL(raw);
+    if (url.port === "5432") url.port = "6543";
+    if (!url.searchParams.has("pgbouncer")) url.searchParams.set("pgbouncer", "true");
+    if (!url.searchParams.has("connection_limit")) url.searchParams.set("connection_limit", "1");
+    return url.toString();
+  } catch {
+    return raw;
   }
-  // For Vercel, use transaction pooler settings
+}
+
+function createClient() {
   const adapter = new PrismaPg({
-    connectionString: url,
+    connectionString: resolveConnectionString(process.env.DATABASE_URL || ""),
     max: 1,
     idleTimeoutMillis: 0,
     connectionTimeoutMillis: 10_000,
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10_000,
   });
   return new PrismaClient({ adapter, log: [] });
 }

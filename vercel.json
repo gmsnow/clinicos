@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["fra1"],
   "functions": {
     "src/app/api/reports/[period]/pdf/route.ts": {
       "memory": 1024,
