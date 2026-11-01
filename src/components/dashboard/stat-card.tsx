@@ -30,11 +30,13 @@ import {
   XCircle,
   type LucideIcon,
 } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { fmtMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export type StatTone = "primary" | "success" | "warning" | "info" | "danger" | "violet";
 export type StatFormat = "int" | "money";
+export type StatHref = React.ComponentProps<typeof Link>["href"];
 
 export type StatIcon =
   | "calendar"
@@ -129,6 +131,7 @@ export function StatCard({
   tone = "primary",
   delta,
   deltaLabel,
+  href,
   index = 0,
 }: {
   icon: StatIcon;
@@ -139,6 +142,7 @@ export function StatCard({
   tone?: StatTone;
   delta?: { value: number; direction: "up" | "down" | "flat" };
   deltaLabel?: string;
+  href?: StatHref;
   index?: number;
 }) {
   const reduce = useReducedMotion();
@@ -150,14 +154,14 @@ export function StatCard({
   const deltaTone =
     delta?.direction === "flat" ? "text-muted-foreground" : delta?.direction === "up" ? "text-success" : "text-destructive";
 
-  return (
+  const card = (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: index * 0.06, ease: EASE }}
       style={{ "--stat-accent": accent } as React.CSSProperties}
       className={cn(
-        "group relative overflow-hidden rounded-xl border bg-card p-4",
+        "group relative h-full overflow-hidden rounded-xl border bg-card p-3 sm:p-4",
         "transition-all duration-300",
         "hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--stat-accent)_45%,var(--border))]",
         "hover:shadow-lg hover:shadow-[color-mix(in_srgb,var(--stat-accent)_12%,transparent)]",
@@ -214,8 +218,19 @@ export function StatCard({
       </p>
 
       {deltaLabel && (
-        <p className="relative mt-1 text-[11px] text-muted-foreground/80">{deltaLabel}</p>
+        <p className="relative mt-1 text-[10px] text-muted-foreground/80 sm:text-[11px]">{deltaLabel}</p>
       )}
     </motion.div>
+  );
+
+  if (!href) return card;
+
+  return (
+    <Link
+      href={href}
+      className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    >
+      {card}
+    </Link>
   );
 }

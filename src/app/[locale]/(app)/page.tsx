@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { StatCard, type StatIcon, type StatTone } from "@/components/dashboard/stat-card";
+import { StatCard, type StatHref, type StatIcon, type StatTone } from "@/components/dashboard/stat-card";
 import {
   RevenuePanel,
   type SummaryItem,
@@ -649,6 +649,7 @@ export default async function DashboardPage() {
     tone: StatTone;
     delta?: { value: number; direction: "up" | "down" | "flat" };
     deltaLabel?: string;
+    href: StatHref;
   }[] = [
     {
       icon: "users",
@@ -658,6 +659,7 @@ export default async function DashboardPage() {
       tone: "primary",
       delta: pctDelta(totalPatients, patientsBefore30d),
       deltaLabel: t("vsYesterday"),
+      href: "/patients",
     },
     {
       icon: "wallet",
@@ -667,6 +669,7 @@ export default async function DashboardPage() {
       tone: "success",
       delta: pctDelta(revenueToday, revenueYesterday),
       deltaLabel: t("vsYesterday"),
+      href: "/reports/daily",
     },
     {
       icon: "dollarSign",
@@ -676,6 +679,7 @@ export default async function DashboardPage() {
       tone: "violet",
       delta: pctDelta(revenueWeek, revenuePrevWeek),
       deltaLabel: t("vsLastWeek"),
+      href: "/reports/weekly",
     },
     {
       icon: "trending",
@@ -685,6 +689,7 @@ export default async function DashboardPage() {
       tone: "warning",
       delta: pctDelta(revenueMonth, revenuePrevMonth),
       deltaLabel: t("vsLastMonth"),
+      href: "/reports/monthly",
     },
   ];
 
@@ -768,7 +773,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Four headline stats */}
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3">
         {stats.map((s, i) => (
           <StatCard
             key={s.label}
@@ -780,6 +785,7 @@ export default async function DashboardPage() {
             tone={s.tone}
             delta={s.delta}
             deltaLabel={s.deltaLabel}
+            href={s.href}
             index={i}
           />
         ))}
