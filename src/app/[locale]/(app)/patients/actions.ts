@@ -234,6 +234,7 @@ export async function createPatient(
     revalidatePath("/patients");
     revalidatePath("/queue");
     revalidatePath("/reception");
+    revalidatePath("/wallet-transfers");
     revalidatePath("/");
     return { ok: true, id: patient.id, mrn: patient.mrn };
   } catch (err) {
@@ -299,6 +300,7 @@ export async function updatePatient(
     });
     revalidatePath("/patients");
     revalidatePath(`/patients/${id}`);
+    revalidatePath("/wallet-transfers");
     return { ok: true, id };
   } catch (err) {
     const conflict = uniqueViolation(err);
@@ -349,6 +351,7 @@ export async function deletePatient(
     });
     revalidatePath("/patients");
     revalidatePath(`/patients/${id}`);
+    revalidatePath("/wallet-transfers");
     revalidatePath("/");
     return { ok: true, id };
   } catch (err) {
