@@ -2,6 +2,11 @@ import { ReportsView } from "@/components/reports/reports-view";
 
 export const dynamic = "force-dynamic";
 
-export default async function ReportsPage() {
-  return <ReportsView period="daily" />;
+export default async function ReportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string; to?: string }>;
+}) {
+  const { from, to } = await searchParams;
+  return <ReportsView period="daily" from={from} to={to} />;
 }

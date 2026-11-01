@@ -13,11 +13,7 @@ const schema = z.object({
   notes: z.string().optional(),
 });
 
-export async function createExpense(formData: FormData) {
-  const user = await requirePermission("accounting:write");
-  const clinicId = user.currentClinicId;
-  if (!clinicId) throw new Error("no clinic");
-
+function parseExpense(formData: FormData) {
   const parsed = schema.safeParse({
     category: formData.get("category") || undefined,
     description: formData.get("description") || undefined,
@@ -26,24 +22,54 @@ export async function createExpense(formData: FormData) {
     notes: formData.get("notes") || undefined,
   });
   if (!parsed.success) throw new Error("invalid");
+  return {
+    category: parsed.data.category || null,
+    description: parsed.data.description,
+    amount: parsed.data.amount,
+    paidAt: parsed.data.paidAt ? new Date(parsed.data.paidAt) : new Date(),
+    notes: parsed.data.notes || null,
+  };
+}
+
+export async function createExpense(formData: FormData) {
+  const user = await requirePermission("accounting:write");
+  const clinicId = user.currentClinicId;
+  if (!clinicId) throw new Error("no clinic");
+
+  const data = parseExpense(formData);
 
   await prisma.expense.create({
     data: {
+      ...data,
       clinicId,
-      category: parsed.data.category || null,
-      description: parsed.data.description,
-      amount: parsed.data.amount,
-      paidAt: parsed.data.paidAt ? new Date(parsed.data.paidAt) : new Date(),
       paidById: user.id,
-      notes: parsed.data.notes || null,
     },
   });
 
   revalidatePath("/expenses");
 }
 
+export async function updateExpense(id: string, formData: FormData) {
+  const user = await requirePermission("accounting:write");
+  const clinicId = user.currentClinicId;
+  if (!clinicId) throw new Error("no clinic");
+
+  const data = parseExpense(formData);
+
+  const result = await prisma.expense.updateMany({
+    where: { id, clinicId },
+    data,
+  });
+  if (result.count === 0) throw new Error("not found");
+
+  revalidatePath("/expenses");
+}
+
 export async function deleteExpense(id: string) {
-  await requirePermission("accounting:write");
-  await prisma.expense.delete({ where: { id } });
+  const user = await requirePermission("accounting:write");
+  const clinicId = user.currentClinicId;
+  if (!clinicId) throw new Error("no clinic");
+
+  await prisma.expense.deleteMany({ where: { id, clinicId } });
   revalidatePath("/expenses");
 }

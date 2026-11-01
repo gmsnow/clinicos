@@ -1,19 +1,26 @@
 import { HandCoins } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { requirePermission } from "@/core/auth/session";
+import { can } from "@/core/rbac";
 import { prisma } from "@/lib/db";
 import { PageHeader } from "@/components/layout/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { ListShell, ListRow } from "@/components/data/list-shell";
 import { StatusBadge } from "@/components/data/status-badge";
 import { fmtDate, fmtMoney } from "@/lib/format";
-import { AdvanceDialog } from "@/components/advances/advance-dialog";
+import {
+  AdvanceDialog,
+  type AdvanceLabels,
+} from "@/components/advances/advance-dialog";
+import { AdvanceRowActions } from "@/components/advances/advance-row-actions";
 import { createAdvance } from "./actions";
 
 export default async function AdvancesPage() {
   const user = await requirePermission("accounting:read");
   const locale = await getLocale();
   const t = await getTranslations("advances");
+  const tc = await getTranslations("common");
+  const canWrite = await can(user, "accounting:write");
   const clinicId = user.currentClinicId;
 
   const [advances, employees] = await Promise.all([
@@ -34,6 +41,28 @@ export default async function AdvancesPage() {
       : [],
   ]);
 
+  const labels: AdvanceLabels = {
+    add: t("add"),
+    edit: t("edit"),
+    employee: t("employee"),
+    amount: t("amount"),
+    reason: t("reason"),
+    givenAt: t("givenAt"),
+    notes: t("notes"),
+    save: t("save"),
+    saving: t("saving"),
+    cancel: tc("cancel"),
+    deleting: tc("deleting"),
+    created: t("created"),
+    updated: t("updated"),
+    failed: t("actionFailed"),
+    delete: tc("delete"),
+    deleteTitle: t("deleteTitle"),
+    deleteDescription: t("deleteDescription"),
+    deleted: t("deleted"),
+    deleteFailed: t("deleteFailed"),
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
@@ -41,20 +70,13 @@ export default async function AdvancesPage() {
         description={t("subtitle")}
         icon={HandCoins}
         actions={
-          <AdvanceDialog
-            employees={employees}
-            action={createAdvance}
-            labels={{
-              add: t("add"),
-              employee: t("employee"),
-              amount: t("amount"),
-              reason: t("reason"),
-              givenAt: t("givenAt"),
-              notes: t("notes"),
-              save: t("save"),
-              saving: t("saving"),
-            }}
-          />
+          canWrite ? (
+            <AdvanceDialog
+              employees={employees}
+              action={createAdvance}
+              labels={labels}
+            />
+          ) : undefined
         }
       />
       {advances.length === 0 ? (
@@ -90,6 +112,20 @@ export default async function AdvancesPage() {
                     ? t("cancelled")
                     : t("pending")}
               </StatusBadge>
+              {canWrite && (
+                <AdvanceRowActions
+                  labels={labels}
+                  employees={employees}
+                  advance={{
+                    id: a.id,
+                    employeeId: a.employeeId ?? "",
+                    amount: Number(a.amount),
+                    reason: a.reason,
+                    givenAt: a.givenAt.toISOString().slice(0, 10),
+                    notes: a.notes,
+                  }}
+                />
+              )}
             </ListRow>
           ))}
         </ListShell>

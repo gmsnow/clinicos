@@ -6,6 +6,34 @@ export type ReportPeriod = "daily" | "weekly" | "monthly";
 
 export const REPORT_PERIODS: ReportPeriod[] = ["daily", "weekly", "monthly"];
 
+export interface ReportRange {
+  start: Date;
+  end: Date;
+  days: number;
+  from: string;
+  to: string;
+}
+
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function parseReportRange(
+  from?: string | null,
+  to?: string | null,
+): ReportRange | null {
+  if (!from || !to || !DATE_RE.test(from) || !DATE_RE.test(to)) return null;
+
+  const fromDate = new Date(`${from}T00:00:00`);
+  const toDate = new Date(`${to}T00:00:00`);
+  if (Number.isNaN(fromDate.getTime()) || Number.isNaN(toDate.getTime())) {
+    return null;
+  }
+
+  const days = Math.round((toDate.getTime() - fromDate.getTime()) / 86_400_000) + 1;
+  if (days < 1 || days > 366) return null;
+
+  return { start: fromDate, end: addDays(toDate, 1), days, from, to };
+}
+
 export interface ReportSeriesPoint {
   label: string;
   value: number;
@@ -41,18 +69,20 @@ export interface ReportData {
 export async function getReportData(
   period: ReportPeriod,
   clinicId: string,
+  range?: ReportRange | null,
 ): Promise<ReportData> {
   const todayStart = startOfDay(new Date());
-  const rangeEnd = addDays(todayStart, 1);
 
-  const days = period === "daily" ? 1 : period === "weekly" ? 7 : 30;
-  const start = addDays(todayStart, -(days - 1));
+  const days = range?.days ?? (period === "daily" ? 1 : period === "weekly" ? 7 : 30);
+  const start = range?.start ?? addDays(todayStart, -(days - 1));
+  const rangeEnd = range?.end ?? addDays(todayStart, 1);
+  const hourly = period === "daily" && days === 1;
 
   const dayLabel = (d: Date) =>
     new Intl.DateTimeFormat("en", { day: "2-digit", month: "short" }).format(d);
 
   const bucketLabels: string[] = [];
-  if (period === "daily") {
+  if (hourly) {
     for (let h = 0; h < 24; h++) {
       bucketLabels.push(`${String(h).padStart(2, "0")}:00`);
     }
@@ -61,7 +91,7 @@ export async function getReportData(
   }
 
   const bucketIndex = (d: Date): number =>
-    period === "daily"
+    hourly
       ? d.getHours()
       : Math.floor((startOfDay(d).getTime() - start.getTime()) / 86_400_000);
 

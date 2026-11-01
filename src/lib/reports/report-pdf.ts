@@ -149,7 +149,7 @@ export function renderReportHtml(input: ReportPdfInput): string {
     year: "numeric",
   });
   const rangeLabel =
-    data.period === "daily"
+    data.days === 1
       ? dateFmt.format(data.start)
       : `${dateFmt.format(data.start)} — ${dateFmt.format(addDays(data.end, -1))}`;
 

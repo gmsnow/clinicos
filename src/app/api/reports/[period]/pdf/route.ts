@@ -5,6 +5,7 @@ import { can } from "@/core/rbac";
 import { prisma } from "@/lib/db";
 import {
   getReportData,
+  parseReportRange,
   REPORT_PERIODS,
   type ReportPeriod,
 } from "@/lib/reports/report-data";
@@ -35,11 +36,16 @@ export async function GET(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const locale = new URL(request.url).searchParams.get("locale") === "en" ? "en" : "ar";
+  const url = new URL(request.url);
+  const locale = url.searchParams.get("locale") === "en" ? "en" : "ar";
+  const range = parseReportRange(
+    url.searchParams.get("from"),
+    url.searchParams.get("to"),
+  );
   const clinicId = user.currentClinicId ?? "";
 
   const [data, clinic, t, ta, tb] = await Promise.all([
-    getReportData(period, clinicId),
+    getReportData(period, clinicId, range),
     clinicId
       ? prisma.clinic.findUnique({
           where: { id: clinicId },
@@ -70,7 +76,7 @@ export async function GET(
       serviceRows,
       labels: {
         title: t("title"),
-        periodName: t(period),
+        periodName: range ? t("customRange") : t(period),
         cardsPatients: t("cardsPatients"),
         cardsAppointments: t("cardsAppointments"),
         cardsEncounter: t("cardsEncounter"),
@@ -89,7 +95,9 @@ export async function GET(
       },
     });
 
-    const filename = `report-${period}-${new Date().toISOString().slice(0, 10)}.pdf`;
+    const filename = range
+      ? `report-${period}-${range.from}_${range.to}.pdf`
+      : `report-${period}-${new Date().toISOString().slice(0, 10)}.pdf`;
     return new NextResponse(new Uint8Array(pdf), {
       headers: {
         "Content-Type": "application/pdf",

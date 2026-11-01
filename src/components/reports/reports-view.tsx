@@ -1,21 +1,49 @@
 import { BarChart3 } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { requirePermission } from "@/core/auth/session";
 import { PageHeader } from "@/components/layout/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { ReportsCharts } from "@/components/reports/reports-charts";
-import { ReportDownloadButton } from "@/components/reports/report-download-button";
-import { getReportData, type ReportPeriod } from "@/lib/reports/report-data";
+import { ReportActions } from "@/components/reports/report-actions";
+import { ReportRangePicker } from "@/components/reports/report-range-picker";
+import {
+  getReportData,
+  parseReportRange,
+  type ReportPeriod,
+} from "@/lib/reports/report-data";
 
 export type { ReportPeriod } from "@/lib/reports/report-data";
 
-export async function ReportsView({ period }: { period: ReportPeriod }) {
+export async function ReportsView({
+  period,
+  from,
+  to,
+}: {
+  period: ReportPeriod;
+  from?: string;
+  to?: string;
+}) {
   const user = await requirePermission("reports:read");
   const t = await getTranslations("reports");
   const ta = await getTranslations("appointments");
   const tb = await getTranslations("billing");
+  const locale = await getLocale();
 
-  const data = await getReportData(period, user.currentClinicId ?? "");
+  const range = parseReportRange(from, to);
+  const data = await getReportData(period, user.currentClinicId ?? "", range);
+
+  const rangeFmt = new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  const rangeLabel = range
+    ? range.days === 1
+      ? rangeFmt.format(range.start)
+      : `${rangeFmt.format(range.start)} — ${rangeFmt.format(
+          new Date(range.end.getTime() - 86_400_000),
+        )}`
+    : null;
 
   const statusSplitData = data.statusSplit.map((s) => ({
     name: ta(`status_${s.status.toLowerCase()}` as never),
@@ -43,9 +71,14 @@ export async function ReportsView({ period }: { period: ReportPeriod }) {
     <div className="flex flex-col gap-6">
       <PageHeader
         title={t("title")}
-        description={t(period)}
+        description={rangeLabel ?? t(period)}
         icon={BarChart3}
-        actions={<ReportDownloadButton period={period} />}
+        actions={
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <ReportRangePicker from={range?.from} to={range?.to} />
+            <ReportActions period={period} from={range?.from} to={range?.to} />
+          </div>
+        }
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
