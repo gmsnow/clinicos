@@ -44,8 +44,9 @@ export default async function EncounterDetailPage({
     ?.trim()
     .split(":")[0]
     ?.toLowerCase();
+  const projectHost = (process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "").trim().toLowerCase();
   const showSkeleton3D =
-    requestHost === "clinicos-ye.vercel.app" || process.env.SKELETON_3D_ENABLED === "1";
+    requestHost === "clinicos-ye.vercel.app" || projectHost === "clinicos-ye.vercel.app";
 
   const encounter = await prisma.encounter.findFirst({
     where: { id, clinicId },
