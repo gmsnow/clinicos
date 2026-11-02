@@ -18,6 +18,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { SkeletonDiagnosis } from "@/components/encounters/skeleton-diagnosis";
+import { EncounterDiagnoses } from "@/components/encounters/encounter-diagnoses";
 
 export type ChartOrder = {
   id: string;
@@ -405,6 +406,17 @@ export function EncounterChart({
                 <SkeletonDiagnosis
                   encounterId={encounter.id}
                   diagnoses={encounter.diagnoses}
+                />
+              )}
+              {k === "diagnosisText" && (encounter.diagnoses.length > 0 || editable) && (
+                <EncounterDiagnoses
+                  encounterId={encounter.id}
+                  patientId={encounter.patientId}
+                  encounterType={encounter.type}
+                  encounterStatus={encounter.status}
+                  encounterCreatedAt={encounter.createdAt}
+                  diagnoses={encounter.diagnoses}
+                  canEdit={editable}
                 />
               )}
             </div>

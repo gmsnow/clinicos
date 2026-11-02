@@ -3,140 +3,24 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Bone, Loader2, Pencil, Trash2, TriangleAlert } from "lucide-react";
+import { Bone, Loader2, TriangleAlert } from "lucide-react";
 import type * as Three from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three/examples/jsm/controls/OrbitControls.js";
 import type { DRACOLoader as DRACOLoaderImpl } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { useRouter } from "@/i18n/navigation";
-import { addDiagnosis, removeDiagnosis, updateDiagnosis } from "@/app/[locale]/(app)/encounters/actions";
+import { addDiagnosis, removeDiagnosis } from "@/app/[locale]/(app)/encounters/actions";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
-type Laterality = "LEFT" | "RIGHT" | "BILATERAL" | "NOT_APPLICABLE";
-
-type ParsedBone = {
-  name: string;
-  laterality: Laterality;
-};
-
-export type SkeletonMarkSource = {
-  id: string;
-  name: string;
-  notes: string | null;
-  codeSystem: string | null;
-};
+  isSkeletonMark,
+  makeSkeletonMarkNotes,
+  parseBoneName,
+  skeletonMarkBoneName,
+  SKELETON_CODE_SYSTEM,
+  type ParsedBone,
+  type SkeletonMarkSource,
+} from "@/lib/skeleton-marks";
 
 type Mark = SkeletonMarkSource;
-
-type EditState = {
-  id: string;
-  name: string;
-  note: string;
-  boneName: string;
-};
-
-const MARK_CODE_SYSTEM = "SKELETON_3D";
-const MARK_RE = /3D skeleton/i;
-const BONE_TAG_RE = /\[bone:([^\]]+)\]/i;
-const NON_BONE = /cartilage|sinus|\btooth\b|\bteeth\b|incisor|canine|premolar|molar|cells? of/i;
-
-function isMark(diagnosis: SkeletonMarkSource) {
-  return diagnosis.codeSystem === MARK_CODE_SYSTEM || MARK_RE.test(diagnosis.notes ?? "");
-}
-
-function markBoneName(mark: Mark) {
-  const tagged = BONE_TAG_RE.exec(mark.notes ?? "")?.[1];
-  if (tagged) return tagged.trim();
-  return parseBoneName(mark.name)?.name ?? mark.name;
-}
-
-function markDisplayName(mark: Mark) {
-  if (BONE_TAG_RE.test(mark.notes ?? "")) return mark.name;
-  return parseBoneName(mark.name)?.name ?? mark.name;
-}
-
-function markDisplayNote(mark: Mark) {
-  return (mark.notes ?? "")
-    .replace(BONE_TAG_RE, "")
-    .replace(/Added from 3D skeleton model|3D skeleton mark/gi, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function makeMarkNotes(boneName: string, note: string) {
-  const extra = note.trim();
-  return `3D skeleton mark [bone:${boneName}]${extra ? ` ${extra}` : ""}`;
-}
-
-function parseBoneName(raw: string): ParsedBone | null {
-  let base = raw.trim();
-  let laterality: Laterality = "NOT_APPLICABLE";
-
-  if (base.includes(".")) {
-    base = base.replace(/\.\d{3}$/, "").trim();
-
-    if (/\.r$/i.test(base)) {
-      laterality = "RIGHT";
-      base = base.replace(/\.r$/i, "");
-    } else if (/\.l$/i.test(base)) {
-      laterality = "LEFT";
-      base = base.replace(/\.l$/i, "");
-    } else if (/^right\b/i.test(base)) {
-      laterality = "RIGHT";
-      base = base.replace(/^right\s+/i, "");
-    } else if (/^left\b/i.test(base)) {
-      laterality = "LEFT";
-      base = base.replace(/^left\s+/i, "");
-    }
-
-    base = base.replace(/\./g, " ").replace(/\s+/g, " ").trim();
-  } else {
-    base = base.replace(/\d{3}$/, "").replace(/_/g, " ").replace(/\s+/g, " ").trim();
-
-    if (/r$/i.test(base) && !/^vomer$/i.test(base)) {
-      laterality = "RIGHT";
-      base = base.replace(/r$/i, "");
-    } else if (/l$/i.test(base)) {
-      laterality = "LEFT";
-      base = base.replace(/l$/i, "");
-    }
-
-    base = base.replace(/\s+/g, " ").trim();
-  }
-
-  if (NON_BONE.test(base)) return null;
-
-  if (!base) return null;
-
-  const suffix =
-    laterality === "RIGHT" ? " (right)" : laterality === "LEFT" ? " (left)" : "";
-
-  return {
-    name: `${base.charAt(0).toUpperCase()}${base.slice(1)}${suffix}`,
-    laterality,
-  };
-}
 
 export function SkeletonDiagnosis({
   encounterId,
@@ -146,7 +30,6 @@ export function SkeletonDiagnosis({
   diagnoses: SkeletonMarkSource[];
 }) {
   const t = useTranslations("encounters");
-  const tc = useTranslations("common");
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const onBoneRef = useRef<(bone: ParsedBone) => void>(() => {});
@@ -158,23 +41,22 @@ export function SkeletonDiagnosis({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [marks, setMarks] = useState<Mark[]>(() =>
-    diagnoses.filter(isMark).map(({ id, name, notes, codeSystem }) => ({ id, name, notes, codeSystem })),
+    diagnoses
+      .filter(isSkeletonMark)
+      .map(({ id, name, notes, codeSystem }) => ({ id, name, notes, codeSystem })),
   );
   const [saving, setSaving] = useState<string[]>([]);
-  const [deleting, setDeleting] = useState<string | null>(null);
-  const [editing, setEditing] = useState<EditState | null>(null);
-  const [editBusy, setEditBusy] = useState(false);
 
   useEffect(() => {
     setMarks(
       diagnoses
-        .filter(isMark)
+        .filter(isSkeletonMark)
         .map(({ id, name, notes, codeSystem }) => ({ id, name, notes, codeSystem })),
     );
   }, [diagnoses]);
 
   useEffect(() => {
-    knownRef.current = new Set(marks.map((mark) => markBoneName(mark).toLowerCase()));
+    knownRef.current = new Set(marks.map((mark) => skeletonMarkBoneName(mark).toLowerCase()));
     markedNamesRef.current = knownRef.current;
     repaintRef.current();
   }, [marks]);
@@ -193,11 +75,11 @@ export function SkeletonDiagnosis({
         const res = await addDiagnosis(encounterId, {
           name: bone.name,
           classification: "LOCAL",
-          codeSystem: MARK_CODE_SYSTEM,
+          codeSystem: SKELETON_CODE_SYSTEM,
           status: "PROVISIONAL",
           course: "ACUTE",
           laterality: bone.laterality,
-          notes: makeMarkNotes(bone.name, ""),
+          notes: makeSkeletonMarkNotes(bone.name, ""),
         });
 
         if (!res.ok) {
@@ -214,8 +96,8 @@ export function SkeletonDiagnosis({
                 {
                   id: res.id,
                   name: bone.name,
-                  notes: makeMarkNotes(bone.name, ""),
-                  codeSystem: MARK_CODE_SYSTEM,
+                  notes: makeSkeletonMarkNotes(bone.name, ""),
+                  codeSystem: SKELETON_CODE_SYSTEM,
                 },
               ],
         );
@@ -244,64 +126,6 @@ export function SkeletonDiagnosis({
   );
 
   onBoneRef.current = addBone;
-
-  async function removeMark(id: string) {
-    setDeleting(id);
-    try {
-      const res = await removeDiagnosis(id);
-      if (res.ok) {
-        setMarks((prev) => prev.filter((mark) => mark.id !== id));
-        toast.success(t("skeleton3dMarkDeleted"));
-        router.refresh();
-      } else {
-        toast.error(t("skeleton3dFailed"));
-      }
-    } catch {
-      toast.error(t("skeleton3dFailed"));
-    } finally {
-      setDeleting(null);
-    }
-  }
-
-  function openEdit(mark: Mark) {
-    setEditing({
-      id: mark.id,
-      name: markDisplayName(mark),
-      note: markDisplayNote(mark),
-      boneName: markBoneName(mark),
-    });
-  }
-
-  async function submitEdit(event: React.FormEvent) {
-    event.preventDefault();
-    if (!editing || !editing.name.trim()) return;
-
-    setEditBusy(true);
-    const name = editing.name.trim();
-    const notes = makeMarkNotes(editing.boneName, editing.note);
-
-    try {
-      const res = await updateDiagnosis(editing.id, {
-        name,
-        notes,
-        codeSystem: MARK_CODE_SYSTEM,
-      });
-      if (res.ok) {
-        setMarks((prev) =>
-          prev.map((mark) => (mark.id === editing.id ? { ...mark, name, notes } : mark)),
-        );
-        setEditing(null);
-        toast.success(t("skeleton3dMarkSaved"));
-        router.refresh();
-      } else {
-        toast.error(t("skeleton3dFailed"));
-      }
-    } catch {
-      toast.error(t("skeleton3dFailed"));
-    } finally {
-      setEditBusy(false);
-    }
-  }
 
   useEffect(() => {
     const container = containerRef.current;
@@ -607,123 +431,6 @@ export function SkeletonDiagnosis({
           </div>
         )}
       </div>
-
-      <div className="border-t">
-        <div className="flex items-center justify-between gap-2 px-3 py-2">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            {t("skeleton3dMarks")}
-          </p>
-          {marks.length > 0 && <Badge variant="info">{marks.length}</Badge>}
-        </div>
-
-        {marks.length === 0 ? (
-          <p className="px-3 pb-3 text-xs text-muted-foreground">{t("skeleton3dNoMarks")}</p>
-        ) : (
-          <ul className="max-h-56 divide-y overflow-y-auto border-t">
-            {marks.map((mark, index) => {
-              const note = markDisplayNote(mark);
-              const boneName = markBoneName(mark);
-              return (
-                <li key={mark.id} className="flex items-start gap-2.5 px-3 py-2.5">
-                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-teal-500/15 text-[10px] font-semibold text-teal-700 dark:text-teal-400">
-                    {index + 1}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{markDisplayName(mark)}</p>
-                    {note && <p className="truncate text-xs text-muted-foreground">{note}</p>}
-                    {boneName.toLowerCase() !== markDisplayName(mark).toLowerCase() && (
-                      <p className="truncate text-[10px] text-muted-foreground">{boneName}</p>
-                    )}
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    aria-label={t("skeleton3dEditMark")}
-                    onClick={() => openEdit(mark)}
-                  >
-                    <Pencil />
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        aria-label={t("skeleton3dDeleteMark")}
-                        disabled={deleting === mark.id}
-                        className="text-muted-foreground hover:text-destructive"
-                      >
-                        <Trash2 />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>{t("skeleton3dDeleteMark")}</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          {t("skeleton3dDeleteMarkDesc")}
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
-                        <AlertDialogAction
-                          disabled={deleting === mark.id}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            void removeMark(mark.id);
-                          }}
-                        >
-                          {deleting === mark.id ? tc("deleting") : tc("delete")}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-
-      <Dialog open={Boolean(editing)} onOpenChange={(open) => !open && setEditing(null)}>
-        <DialogContent size="default">
-          <DialogHeader>
-            <DialogTitle>{t("skeleton3dEditMark")}</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={submitEdit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="skeleton-mark-name">{t("skeleton3dMarkName")}</Label>
-              <Input
-                id="skeleton-mark-name"
-                value={editing?.name ?? ""}
-                onChange={(event) =>
-                  setEditing((prev) => (prev ? { ...prev, name: event.target.value } : prev))
-                }
-                required
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="skeleton-mark-note">{t("skeleton3dMarkNote")}</Label>
-              <Textarea
-                id="skeleton-mark-note"
-                rows={3}
-                value={editing?.note ?? ""}
-                onChange={(event) =>
-                  setEditing((prev) => (prev ? { ...prev, note: event.target.value } : prev))
-                }
-              />
-            </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setEditing(null)}>
-                {tc("cancel")}
-              </Button>
-              <Button type="submit" disabled={editBusy || !editing?.name.trim()}>
-                {editBusy ? tc("saving") : tc("save")}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
     </section>
   );
 }

@@ -1222,7 +1222,15 @@
     "skeleton3dMarkName": "Mark name",
     "skeleton3dMarkNote": "Note (optional)",
     "skeleton3dMarkSaved": "Mark updated",
-    "skeleton3dMarkDeleted": "Mark deleted"
+    "skeleton3dMarkDeleted": "Mark deleted",
+    "recordedDiagnoses": "Recorded diagnoses",
+    "recordedDiagnosesHint": "Structured diagnoses for this visit, including skeleton marks.",
+    "noRecordedDiagnoses": "No structured diagnoses yet.",
+    "editDiagnosis": "Edit diagnosis",
+    "deleteDiagnosis": "Delete diagnosis",
+    "deleteDiagnosisDesc": "This diagnosis will be removed from this visit.",
+    "diagnosisUpdated": "Diagnosis updated",
+    "diagnosisDeleted": "Diagnosis deleted"
   },
   "returns": {
     "title": "Returns",

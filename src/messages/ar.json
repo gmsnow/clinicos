@@ -1222,7 +1222,15 @@
     "skeleton3dMarkName": "اسم العلامة",
     "skeleton3dMarkNote": "ملاحظة (اختياري)",
     "skeleton3dMarkSaved": "تم تحديث العلامة",
-    "skeleton3dMarkDeleted": "تم حذف العلامة"
+    "skeleton3dMarkDeleted": "تم حذف العلامة",
+    "recordedDiagnoses": "التشخيصات المسجلة",
+    "recordedDiagnosesHint": "التشخيصات المنظمة لهذه الزيارة، بما فيها علامات الهيكل.",
+    "noRecordedDiagnoses": "لا توجد تشخيصات منظمة بعد.",
+    "editDiagnosis": "تعديل التشخيص",
+    "deleteDiagnosis": "حذف التشخيص",
+    "deleteDiagnosisDesc": "سيتم حذف هذا التشخيص من هذه الزيارة.",
+    "diagnosisUpdated": "تم تحديث التشخيص",
+    "diagnosisDeleted": "تم حذف التشخيص"
   },
   "returns": {
     "title": "العودات",
