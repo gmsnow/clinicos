@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Bone, Loader2, TriangleAlert } from "lucide-react";
 import type * as Three from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three/examples/jsm/controls/OrbitControls.js";
+import type { DRACOLoader as DRACOLoaderImpl } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { useRouter } from "@/i18n/navigation";
 import { addDiagnosis, removeDiagnosis } from "@/app/[locale]/(app)/encounters/actions";
 import { Badge } from "@/components/ui/badge";
@@ -133,6 +134,7 @@ export function SkeletonDiagnosis({
     let frame = 0;
     let renderer: Three.WebGLRenderer | null = null;
     let controls: OrbitControlsImpl | null = null;
+    let dracoLoader: DRACOLoaderImpl | null = null;
     let model: Three.Object3D | null = null;
     let baseMaterial: Three.MeshStandardMaterial | null = null;
     let highlightMaterial: Three.MeshStandardMaterial | null = null;
@@ -144,8 +146,9 @@ export function SkeletonDiagnosis({
     (async () => {
       try {
         const THREE = await import("three");
-        const [{ GLTFLoader }, { OrbitControls }] = await Promise.all([
+        const [{ GLTFLoader }, { DRACOLoader }, { OrbitControls }] = await Promise.all([
           import("three/examples/jsm/loaders/GLTFLoader.js"),
+          import("three/examples/jsm/loaders/DRACOLoader.js"),
           import("three/examples/jsm/controls/OrbitControls.js"),
         ]);
         if (cancelled) return;
@@ -269,7 +272,10 @@ export function SkeletonDiagnosis({
         renderer.domElement.addEventListener("pointerdown", onPointerDown);
         renderer.domElement.addEventListener("pointerup", onPointerUp);
 
+        dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath("/draco/");
         const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
         loader.load(
           "/models/skeleton.glb",
           (gltf) => {
@@ -347,6 +353,7 @@ export function SkeletonDiagnosis({
       resizeObserver?.disconnect();
       if (highlightTimer) clearTimeout(highlightTimer);
       controls?.dispose();
+      dracoLoader?.dispose();
       model?.traverse((object) => {
         const mesh = object as Three.Mesh;
         if (mesh.isMesh) mesh.geometry.dispose();
