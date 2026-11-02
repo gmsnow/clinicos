@@ -66,7 +66,14 @@ function isMark(diagnosis: SkeletonMarkSource) {
 }
 
 function markBoneName(mark: Mark) {
-  return (BONE_TAG_RE.exec(mark.notes ?? "")?.[1] ?? mark.name).trim();
+  const tagged = BONE_TAG_RE.exec(mark.notes ?? "")?.[1];
+  if (tagged) return tagged.trim();
+  return parseBoneName(mark.name)?.name ?? mark.name;
+}
+
+function markDisplayName(mark: Mark) {
+  if (BONE_TAG_RE.test(mark.notes ?? "")) return mark.name;
+  return parseBoneName(mark.name)?.name ?? mark.name;
 }
 
 function markDisplayNote(mark: Mark) {
@@ -83,26 +90,43 @@ function makeMarkNotes(boneName: string, note: string) {
 }
 
 function parseBoneName(raw: string): ParsedBone | null {
-  let base = raw.replace(/\.\d{3}$/, "").trim();
+  let base = raw.trim();
   let laterality: Laterality = "NOT_APPLICABLE";
 
-  if (/\.r$/i.test(base)) {
-    laterality = "RIGHT";
-    base = base.replace(/\.r$/i, "");
-  } else if (/\.l$/i.test(base)) {
-    laterality = "LEFT";
-    base = base.replace(/\.l$/i, "");
-  } else if (/^right\b/i.test(base)) {
-    laterality = "RIGHT";
-    base = base.replace(/^right\s+/i, "");
-  } else if (/^left\b/i.test(base)) {
-    laterality = "LEFT";
-    base = base.replace(/^left\s+/i, "");
+  if (base.includes(".")) {
+    base = base.replace(/\.\d{3}$/, "").trim();
+
+    if (/\.r$/i.test(base)) {
+      laterality = "RIGHT";
+      base = base.replace(/\.r$/i, "");
+    } else if (/\.l$/i.test(base)) {
+      laterality = "LEFT";
+      base = base.replace(/\.l$/i, "");
+    } else if (/^right\b/i.test(base)) {
+      laterality = "RIGHT";
+      base = base.replace(/^right\s+/i, "");
+    } else if (/^left\b/i.test(base)) {
+      laterality = "LEFT";
+      base = base.replace(/^left\s+/i, "");
+    }
+
+    base = base.replace(/\./g, " ").replace(/\s+/g, " ").trim();
+  } else {
+    base = base.replace(/\d{3}$/, "").replace(/_/g, " ").replace(/\s+/g, " ").trim();
+
+    if (/r$/i.test(base) && !/^vomer$/i.test(base)) {
+      laterality = "RIGHT";
+      base = base.replace(/r$/i, "");
+    } else if (/l$/i.test(base)) {
+      laterality = "LEFT";
+      base = base.replace(/l$/i, "");
+    }
+
+    base = base.replace(/\s+/g, " ").trim();
   }
 
   if (NON_BONE.test(base)) return null;
 
-  base = base.replace(/\./g, " ").replace(/\s+/g, " ").trim();
   if (!base) return null;
 
   const suffix =
@@ -242,7 +266,7 @@ export function SkeletonDiagnosis({
   function openEdit(mark: Mark) {
     setEditing({
       id: mark.id,
-      name: mark.name,
+      name: markDisplayName(mark),
       note: markDisplayNote(mark),
       boneName: markBoneName(mark),
     });
@@ -459,7 +483,9 @@ export function SkeletonDiagnosis({
               mesh.castShadow = false;
               mesh.receiveShadow = false;
 
-              const bone = parseBoneName(mesh.name);
+              const originalName =
+                typeof mesh.userData.name === "string" ? mesh.userData.name : mesh.name;
+              const bone = parseBoneName(originalName);
               if (bone) {
                 mesh.userData.bone = bone;
                 boneMeshes.set(bone.name.toLowerCase(), mesh);
@@ -603,9 +629,9 @@ export function SkeletonDiagnosis({
                     {index + 1}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{mark.name}</p>
+                    <p className="truncate text-sm font-medium">{markDisplayName(mark)}</p>
                     {note && <p className="truncate text-xs text-muted-foreground">{note}</p>}
-                    {boneName.toLowerCase() !== mark.name.toLowerCase() && (
+                    {boneName.toLowerCase() !== markDisplayName(mark).toLowerCase() && (
                       <p className="truncate text-[10px] text-muted-foreground">{boneName}</p>
                     )}
                   </div>
