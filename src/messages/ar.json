@@ -1205,7 +1205,17 @@
     "visitClosed": "الزيارة مغلقة وهي للقراءة فقط",
     "pendingOrdersRemain": "توجد طلبات مختبر/أشعة معلقة",
     "reopenNote": "تبقى الزيارة المغلقة ضمن التاريخ الطبي للمريض",
-    "prescriptionStatus": "حالة الوصفة"
+    "prescriptionStatus": "حالة الوصفة",
+    "skeleton3dTitle": "الهيكل العظمي ثلاثي الأبعاد",
+    "skeleton3dHint": "انقر على عظم لإضافته إلى تشخيص هذه الزيارة.",
+    "skeleton3dLoading": "جارٍ تحميل الهيكل…",
+    "skeleton3dError": "تعذّر تحميل النموذج ثلاثي الأبعاد.",
+    "skeleton3dAdded": "أُضيف {name} إلى التشخيص",
+    "skeleton3dAlready": "{name} موجود بالفعل في تشخيص هذه الزيارة.",
+    "skeleton3dFailed": "تعذّر إضافة التشخيص.",
+    "skeleton3dUndo": "تراجع",
+    "skeleton3dAttribution": "النموذج: Z-Anatomy / BodyParts3D ·",
+    "skeleton3dDisclaimer": "عرض تعليمي — ليس للاستخدام السريري"
   },
   "returns": {
     "title": "العودات",

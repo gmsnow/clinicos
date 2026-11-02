@@ -1205,7 +1205,17 @@
     "visitClosed": "This visit is closed and is read-only",
     "pendingOrdersRemain": "Pending lab/imaging orders remain",
     "reopenNote": "Closed visits stay in the patient's medical history",
-    "prescriptionStatus": "Prescription status"
+    "prescriptionStatus": "Prescription status",
+    "skeleton3dTitle": "3D skeleton",
+    "skeleton3dHint": "Click a bone to add it to this visit's diagnosis.",
+    "skeleton3dLoading": "Loading skeleton…",
+    "skeleton3dError": "The 3D model could not be loaded.",
+    "skeleton3dAdded": "{name} added to diagnosis",
+    "skeleton3dAlready": "{name} is already in this visit's diagnosis.",
+    "skeleton3dFailed": "Could not add the diagnosis.",
+    "skeleton3dUndo": "Undo",
+    "skeleton3dAttribution": "Model: Z-Anatomy / BodyParts3D ·",
+    "skeleton3dDisclaimer": "Educational visualization — not for clinical use"
   },
   "returns": {
     "title": "Returns",

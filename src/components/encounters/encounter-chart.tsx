@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { SkeletonDiagnosis } from "@/components/encounters/skeleton-diagnosis";
 
 export type ChartOrder = {
   id: string;
@@ -190,11 +191,13 @@ export function EncounterChart({
   canWrite,
   canSign,
   canAmend,
+  showSkeleton3D = false,
 }: {
   encounter: ChartEncounter;
   canWrite: boolean;
   canSign: boolean;
   canAmend: boolean;
+  showSkeleton3D?: boolean;
 }) {
   const t = useTranslations("encounters");
   const tc = useTranslations("common");
@@ -397,6 +400,12 @@ export function EncounterChart({
                 <p className="whitespace-pre-wrap text-sm">
                   {form[k] ? form[k] : <span className="text-muted-foreground">—</span>}
                 </p>
+              )}
+              {k === "diagnosisText" && editable && showSkeleton3D && (
+                <SkeletonDiagnosis
+                  encounterId={encounter.id}
+                  existingNames={encounter.diagnoses.map((diagnosis) => diagnosis.name)}
+                />
               )}
             </div>
           ))}

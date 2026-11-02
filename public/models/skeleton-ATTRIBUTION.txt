@@ -1,0 +1,15 @@
+Skeleton model: skeleton.glb
+Source: https://veteranhq.app/models/anatomy/skeleton.glb
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+         https://creativecommons.org/licenses/by-sa/4.0/
+
+Derived from:
+- Z-Anatomy (Gauthier Kervyn) - https://www.z-anatomy.com/
+- BodyParts3D, (c) DBCLS, licensed under CC BY-SA 2.1 JP
+  https://lifesciencedb.jp/bp3d/
+
+GLB conversion and layer selection: Liyucheng1997 / VeteranHQ.
+
+Modifications: layer selection to bones only, embedded as a single GLB asset.
+
+Educational visualization only. Not a medical device and not for clinical use.

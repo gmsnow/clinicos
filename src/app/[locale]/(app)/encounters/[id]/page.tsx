@@ -14,6 +14,7 @@ import { EncounterInvoiceButton } from "@/components/billing/encounter-invoice-b
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 
 export default async function EncounterDetailPage({
   params,
@@ -32,6 +33,19 @@ export default async function EncounterDetailPage({
   const canViewPatient = await can(user, "patients:read");
   const tp = await getTranslations("patients");
   const tb = await getTranslations("billing");
+
+  const requestHeaders = await headers();
+  const requestHost = (
+    requestHeaders.get("x-forwarded-host") ??
+    requestHeaders.get("host") ??
+    ""
+  )
+    .split(",")[0]
+    ?.trim()
+    .split(":")[0]
+    ?.toLowerCase();
+  const showSkeleton3D =
+    requestHost === "clinicos-ye.vercel.app" || process.env.SKELETON_3D_ENABLED === "1";
 
   const encounter = await prisma.encounter.findFirst({
     where: { id, clinicId },
@@ -132,6 +146,7 @@ export default async function EncounterDetailPage({
         canWrite={canWrite}
         canSign={canSign}
         canAmend={canAmend}
+        showSkeleton3D={showSkeleton3D}
       />
       {!encounterClosed && (
         <div className="flex justify-end">
