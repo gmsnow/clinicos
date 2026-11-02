@@ -1215,7 +1215,16 @@
     "skeleton3dFailed": "Could not add the diagnosis.",
     "skeleton3dUndo": "Undo",
     "skeleton3dAttribution": "Model: Z-Anatomy / BodyParts3D ·",
-    "skeleton3dDisclaimer": "Educational visualization — not for clinical use"
+    "skeleton3dDisclaimer": "Educational visualization — not for clinical use",
+    "skeleton3dMarks": "Marks",
+    "skeleton3dNoMarks": "Click a bone to add a mark.",
+    "skeleton3dEditMark": "Edit mark",
+    "skeleton3dDeleteMark": "Delete mark",
+    "skeleton3dDeleteMarkDesc": "This removes the mark and its diagnosis from this visit.",
+    "skeleton3dMarkName": "Mark name",
+    "skeleton3dMarkNote": "Note (optional)",
+    "skeleton3dMarkSaved": "Mark updated",
+    "skeleton3dMarkDeleted": "Mark deleted"
   },
   "returns": {
     "title": "Returns",

@@ -3,13 +3,35 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Bone, Loader2, TriangleAlert } from "lucide-react";
+import { Bone, Loader2, Pencil, Trash2, TriangleAlert } from "lucide-react";
 import type * as Three from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three/examples/jsm/controls/OrbitControls.js";
 import type { DRACOLoader as DRACOLoaderImpl } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { useRouter } from "@/i18n/navigation";
-import { addDiagnosis, removeDiagnosis } from "@/app/[locale]/(app)/encounters/actions";
+import { addDiagnosis, removeDiagnosis, updateDiagnosis } from "@/app/[locale]/(app)/encounters/actions";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type Laterality = "LEFT" | "RIGHT" | "BILATERAL" | "NOT_APPLICABLE";
 
@@ -18,7 +40,47 @@ type ParsedBone = {
   laterality: Laterality;
 };
 
+export type SkeletonMarkSource = {
+  id: string;
+  name: string;
+  notes: string | null;
+  codeSystem: string | null;
+};
+
+type Mark = SkeletonMarkSource;
+
+type EditState = {
+  id: string;
+  name: string;
+  note: string;
+  boneName: string;
+};
+
+const MARK_CODE_SYSTEM = "SKELETON_3D";
+const MARK_RE = /3D skeleton/i;
+const BONE_TAG_RE = /\[bone:([^\]]+)\]/i;
 const NON_BONE = /cartilage|sinus|\btooth\b|\bteeth\b|incisor|canine|premolar|molar|cells? of/i;
+
+function isMark(diagnosis: SkeletonMarkSource) {
+  return diagnosis.codeSystem === MARK_CODE_SYSTEM || MARK_RE.test(diagnosis.notes ?? "");
+}
+
+function markBoneName(mark: Mark) {
+  return (BONE_TAG_RE.exec(mark.notes ?? "")?.[1] ?? mark.name).trim();
+}
+
+function markDisplayNote(mark: Mark) {
+  return (mark.notes ?? "")
+    .replace(BONE_TAG_RE, "")
+    .replace(/Added from 3D skeleton model|3D skeleton mark/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function makeMarkNotes(boneName: string, note: string) {
+  const extra = note.trim();
+  return `3D skeleton mark [bone:${boneName}]${extra ? ` ${extra}` : ""}`;
+}
 
 function parseBoneName(raw: string): ParsedBone | null {
   let base = raw.replace(/\.\d{3}$/, "").trim();
@@ -54,26 +116,44 @@ function parseBoneName(raw: string): ParsedBone | null {
 
 export function SkeletonDiagnosis({
   encounterId,
-  existingNames,
+  diagnoses,
 }: {
   encounterId: string;
-  existingNames: string[];
+  diagnoses: SkeletonMarkSource[];
 }) {
   const t = useTranslations("encounters");
+  const tc = useTranslations("common");
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const onBoneRef = useRef<(bone: ParsedBone) => void>(() => {});
   const knownRef = useRef<Set<string>>(new Set());
+  const markedNamesRef = useRef<Set<string>>(new Set());
+  const repaintRef = useRef<() => void>(() => {});
+  const tRef = useRef(t);
+  tRef.current = t;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [localNames, setLocalNames] = useState<string[]>([]);
+  const [marks, setMarks] = useState<Mark[]>(() =>
+    diagnoses.filter(isMark).map(({ id, name, notes, codeSystem }) => ({ id, name, notes, codeSystem })),
+  );
   const [saving, setSaving] = useState<string[]>([]);
+  const [deleting, setDeleting] = useState<string | null>(null);
+  const [editing, setEditing] = useState<EditState | null>(null);
+  const [editBusy, setEditBusy] = useState(false);
 
   useEffect(() => {
-    knownRef.current = new Set(
-      [...existingNames, ...localNames].map((name) => name.trim().toLowerCase()),
+    setMarks(
+      diagnoses
+        .filter(isMark)
+        .map(({ id, name, notes, codeSystem }) => ({ id, name, notes, codeSystem })),
     );
-  }, [existingNames, localNames]);
+  }, [diagnoses]);
+
+  useEffect(() => {
+    knownRef.current = new Set(marks.map((mark) => markBoneName(mark).toLowerCase()));
+    markedNamesRef.current = knownRef.current;
+    repaintRef.current();
+  }, [marks]);
 
   const addBone = useCallback(
     async (bone: ParsedBone) => {
@@ -82,25 +162,39 @@ export function SkeletonDiagnosis({
         return;
       }
 
+      knownRef.current.add(bone.name.toLowerCase());
       setSaving((prev) => (prev.includes(bone.name) ? prev : [...prev, bone.name]));
 
       try {
         const res = await addDiagnosis(encounterId, {
           name: bone.name,
           classification: "LOCAL",
+          codeSystem: MARK_CODE_SYSTEM,
           status: "PROVISIONAL",
           course: "ACUTE",
           laterality: bone.laterality,
-          notes: "Added from 3D skeleton model",
+          notes: makeMarkNotes(bone.name, ""),
         });
 
         if (!res.ok) {
+          knownRef.current.delete(bone.name.toLowerCase());
           toast.error(t("skeleton3dFailed"));
           return;
         }
 
-        knownRef.current.add(bone.name.toLowerCase());
-        setLocalNames((prev) => (prev.includes(bone.name) ? prev : [...prev, bone.name]));
+        setMarks((prev) =>
+          prev.some((mark) => mark.id === res.id)
+            ? prev
+            : [
+                ...prev,
+                {
+                  id: res.id,
+                  name: bone.name,
+                  notes: makeMarkNotes(bone.name, ""),
+                  codeSystem: MARK_CODE_SYSTEM,
+                },
+              ],
+        );
         router.refresh();
 
         toast.success(t("skeleton3dAdded", { name: bone.name }), {
@@ -109,13 +203,14 @@ export function SkeletonDiagnosis({
             onClick: async () => {
               const undo = await removeDiagnosis(res.id);
               if (undo.ok) {
-                setLocalNames((prev) => prev.filter((name) => name !== bone.name));
+                setMarks((prev) => prev.filter((mark) => mark.id !== res.id));
                 router.refresh();
               }
             },
           },
         });
       } catch {
+        knownRef.current.delete(bone.name.toLowerCase());
         toast.error(t("skeleton3dFailed"));
       } finally {
         setSaving((prev) => prev.filter((name) => name !== bone.name));
@@ -125,6 +220,64 @@ export function SkeletonDiagnosis({
   );
 
   onBoneRef.current = addBone;
+
+  async function removeMark(id: string) {
+    setDeleting(id);
+    try {
+      const res = await removeDiagnosis(id);
+      if (res.ok) {
+        setMarks((prev) => prev.filter((mark) => mark.id !== id));
+        toast.success(t("skeleton3dMarkDeleted"));
+        router.refresh();
+      } else {
+        toast.error(t("skeleton3dFailed"));
+      }
+    } catch {
+      toast.error(t("skeleton3dFailed"));
+    } finally {
+      setDeleting(null);
+    }
+  }
+
+  function openEdit(mark: Mark) {
+    setEditing({
+      id: mark.id,
+      name: mark.name,
+      note: markDisplayNote(mark),
+      boneName: markBoneName(mark),
+    });
+  }
+
+  async function submitEdit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!editing || !editing.name.trim()) return;
+
+    setEditBusy(true);
+    const name = editing.name.trim();
+    const notes = makeMarkNotes(editing.boneName, editing.note);
+
+    try {
+      const res = await updateDiagnosis(editing.id, {
+        name,
+        notes,
+        codeSystem: MARK_CODE_SYSTEM,
+      });
+      if (res.ok) {
+        setMarks((prev) =>
+          prev.map((mark) => (mark.id === editing.id ? { ...mark, name, notes } : mark)),
+        );
+        setEditing(null);
+        toast.success(t("skeleton3dMarkSaved"));
+        router.refresh();
+      } else {
+        toast.error(t("skeleton3dFailed"));
+      }
+    } catch {
+      toast.error(t("skeleton3dFailed"));
+    } finally {
+      setEditBusy(false);
+    }
+  }
 
   useEffect(() => {
     const container = containerRef.current;
@@ -137,9 +290,9 @@ export function SkeletonDiagnosis({
     let dracoLoader: DRACOLoaderImpl | null = null;
     let model: Three.Object3D | null = null;
     let baseMaterial: Three.MeshStandardMaterial | null = null;
+    let markMaterial: Three.MeshStandardMaterial | null = null;
     let highlightMaterial: Three.MeshStandardMaterial | null = null;
     let highlighted: Three.Mesh | null = null;
-    let highlightOriginal: Three.Material | Three.Material[] | null = null;
     let highlightTimer: ReturnType<typeof setTimeout> | null = null;
     let resizeObserver: ResizeObserver | null = null;
 
@@ -192,6 +345,14 @@ export function SkeletonDiagnosis({
           color: 0xe9e2d0,
           roughness: 0.68,
           metalness: 0.02,
+          side: THREE.DoubleSide,
+        });
+        markMaterial = new THREE.MeshStandardMaterial({
+          color: 0x14b8a6,
+          emissive: 0x0f766e,
+          emissiveIntensity: 0.8,
+          roughness: 0.45,
+          metalness: 0.03,
           side: THREE.DoubleSide,
         });
         highlightMaterial = new THREE.MeshStandardMaterial({
@@ -251,22 +412,23 @@ export function SkeletonDiagnosis({
 
           if (!hit) return;
 
-          if (highlighted) {
-            highlighted.material = highlightOriginal ?? baseMaterial!;
+          const bone = hit.userData.bone as ParsedBone;
+          if (markedNamesRef.current.has(bone.name.toLowerCase())) {
+            toast.info(tRef.current("skeleton3dAlready", { name: bone.name }));
+            return;
           }
+
           if (highlightTimer) clearTimeout(highlightTimer);
           highlighted = hit;
-          highlightOriginal = hit.material;
           hit.material = highlightMaterial!;
           highlightTimer = setTimeout(() => {
             if (highlighted === hit) {
-              hit.material = highlightOriginal ?? baseMaterial!;
               highlighted = null;
-              highlightOriginal = null;
+              repaintRef.current();
             }
           }, 1200);
 
-          onBoneRef.current(hit.userData.bone as ParsedBone);
+          onBoneRef.current(bone);
         };
 
         renderer.domElement.addEventListener("pointerdown", onPointerDown);
@@ -288,6 +450,8 @@ export function SkeletonDiagnosis({
             }
 
             model = gltf.scene;
+            const boneMeshes = new Map<string, Three.Mesh>();
+
             model.traverse((object) => {
               const mesh = object as Three.Mesh;
               if (!mesh.isMesh) return;
@@ -296,8 +460,20 @@ export function SkeletonDiagnosis({
               mesh.receiveShadow = false;
 
               const bone = parseBoneName(mesh.name);
-              if (bone) mesh.userData.bone = bone;
+              if (bone) {
+                mesh.userData.bone = bone;
+                boneMeshes.set(bone.name.toLowerCase(), mesh);
+              }
             });
+
+            const applyMarks = () => {
+              for (const [name, mesh] of boneMeshes) {
+                if (highlighted === mesh) continue;
+                mesh.material = markedNamesRef.current.has(name) ? markMaterial! : baseMaterial!;
+              }
+            };
+            repaintRef.current = applyMarks;
+            applyMarks();
 
             const box = new THREE.Box3().setFromObject(model);
             const size = box.getSize(new THREE.Vector3());
@@ -337,7 +513,6 @@ export function SkeletonDiagnosis({
           if (renderer) renderer.render(scene, camera);
         };
         animate();
-
       } catch (initError) {
         console.error("Failed to initialise 3D skeleton", initError);
         if (!cancelled) {
@@ -352,6 +527,7 @@ export function SkeletonDiagnosis({
       cancelAnimationFrame(frame);
       resizeObserver?.disconnect();
       if (highlightTimer) clearTimeout(highlightTimer);
+      repaintRef.current = () => {};
       controls?.dispose();
       dracoLoader?.dispose();
       model?.traverse((object) => {
@@ -359,6 +535,7 @@ export function SkeletonDiagnosis({
         if (mesh.isMesh) mesh.geometry.dispose();
       });
       baseMaterial?.dispose();
+      markMaterial?.dispose();
       highlightMaterial?.dispose();
       renderer?.dispose();
       renderer?.domElement.remove();
@@ -377,9 +554,7 @@ export function SkeletonDiagnosis({
             <p className="text-xs text-muted-foreground">{t("skeleton3dHint")}</p>
           </div>
         </div>
-        {localNames.length > 0 && (
-          <Badge variant="info">{localNames.length}</Badge>
-        )}
+        {marks.length > 0 && <Badge variant="info">{marks.length}</Badge>}
       </div>
 
       <div className="relative h-[380px] sm:h-[500px]">
@@ -407,6 +582,83 @@ export function SkeletonDiagnosis({
         )}
       </div>
 
+      <div className="border-t">
+        <div className="flex items-center justify-between gap-2 px-3 py-2">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {t("skeleton3dMarks")}
+          </p>
+          {marks.length > 0 && <Badge variant="info">{marks.length}</Badge>}
+        </div>
+
+        {marks.length === 0 ? (
+          <p className="px-3 pb-3 text-xs text-muted-foreground">{t("skeleton3dNoMarks")}</p>
+        ) : (
+          <ul className="max-h-56 divide-y overflow-y-auto border-t">
+            {marks.map((mark, index) => {
+              const note = markDisplayNote(mark);
+              const boneName = markBoneName(mark);
+              return (
+                <li key={mark.id} className="flex items-start gap-2.5 px-3 py-2.5">
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-teal-500/15 text-[10px] font-semibold text-teal-700 dark:text-teal-400">
+                    {index + 1}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium">{mark.name}</p>
+                    {note && <p className="truncate text-xs text-muted-foreground">{note}</p>}
+                    {boneName.toLowerCase() !== mark.name.toLowerCase() && (
+                      <p className="truncate text-[10px] text-muted-foreground">{boneName}</p>
+                    )}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={t("skeleton3dEditMark")}
+                    onClick={() => openEdit(mark)}
+                  >
+                    <Pencil />
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        aria-label={t("skeleton3dDeleteMark")}
+                        disabled={deleting === mark.id}
+                        className="text-muted-foreground hover:text-destructive"
+                      >
+                        <Trash2 />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>{t("skeleton3dDeleteMark")}</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {t("skeleton3dDeleteMarkDesc")}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
+                        <AlertDialogAction
+                          disabled={deleting === mark.id}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            void removeMark(mark.id);
+                          }}
+                        >
+                          {deleting === mark.id ? tc("deleting") : tc("delete")}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t px-3 py-2 text-[10px] leading-relaxed text-muted-foreground">
         <span>
           {t("skeleton3dAttribution")}{" "}
@@ -421,6 +673,46 @@ export function SkeletonDiagnosis({
         </span>
         <span>{t("skeleton3dDisclaimer")}</span>
       </div>
+
+      <Dialog open={Boolean(editing)} onOpenChange={(open) => !open && setEditing(null)}>
+        <DialogContent size="default">
+          <DialogHeader>
+            <DialogTitle>{t("skeleton3dEditMark")}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={submitEdit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="skeleton-mark-name">{t("skeleton3dMarkName")}</Label>
+              <Input
+                id="skeleton-mark-name"
+                value={editing?.name ?? ""}
+                onChange={(event) =>
+                  setEditing((prev) => (prev ? { ...prev, name: event.target.value } : prev))
+                }
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="skeleton-mark-note">{t("skeleton3dMarkNote")}</Label>
+              <Textarea
+                id="skeleton-mark-note"
+                rows={3}
+                value={editing?.note ?? ""}
+                onChange={(event) =>
+                  setEditing((prev) => (prev ? { ...prev, note: event.target.value } : prev))
+                }
+              />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setEditing(null)}>
+                {tc("cancel")}
+              </Button>
+              <Button type="submit" disabled={editBusy || !editing?.name.trim()}>
+                {editBusy ? tc("saving") : tc("save")}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

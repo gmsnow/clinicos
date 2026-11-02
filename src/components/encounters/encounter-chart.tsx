@@ -404,7 +404,7 @@ export function EncounterChart({
               {k === "diagnosisText" && editable && showSkeleton3D && (
                 <SkeletonDiagnosis
                   encounterId={encounter.id}
-                  existingNames={encounter.diagnoses.map((diagnosis) => diagnosis.name)}
+                  diagnoses={encounter.diagnoses}
                 />
               )}
             </div>

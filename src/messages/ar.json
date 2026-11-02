@@ -1215,7 +1215,16 @@
     "skeleton3dFailed": "تعذّر إضافة التشخيص.",
     "skeleton3dUndo": "تراجع",
     "skeleton3dAttribution": "النموذج: Z-Anatomy / BodyParts3D ·",
-    "skeleton3dDisclaimer": "عرض تعليمي — ليس للاستخدام السريري"
+    "skeleton3dDisclaimer": "عرض تعليمي — ليس للاستخدام السريري",
+    "skeleton3dMarks": "العلامات",
+    "skeleton3dNoMarks": "انقر على عظم لإضافة علامة.",
+    "skeleton3dEditMark": "تعديل العلامة",
+    "skeleton3dDeleteMark": "حذف العلامة",
+    "skeleton3dDeleteMarkDesc": "سيؤدي هذا إلى حذف العلامة وتشخيصها من هذه الزيارة.",
+    "skeleton3dMarkName": "اسم العلامة",
+    "skeleton3dMarkNote": "ملاحظة (اختياري)",
+    "skeleton3dMarkSaved": "تم تحديث العلامة",
+    "skeleton3dMarkDeleted": "تم حذف العلامة"
   },
   "returns": {
     "title": "العودات",
