@@ -416,7 +416,7 @@ export function EncounterChart({
                   encounterStatus={encounter.status}
                   encounterCreatedAt={encounter.createdAt}
                   diagnoses={encounter.diagnoses}
-                  canEdit={editable}
+                  canEdit={canWrite}
                 />
               )}
             </div>
