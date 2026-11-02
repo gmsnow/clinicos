@@ -1214,8 +1214,6 @@
     "skeleton3dAlready": "{name} is already in this visit's diagnosis.",
     "skeleton3dFailed": "Could not add the diagnosis.",
     "skeleton3dUndo": "Undo",
-    "skeleton3dAttribution": "Model: Z-Anatomy / BodyParts3D ·",
-    "skeleton3dDisclaimer": "Educational visualization — not for clinical use",
     "skeleton3dMarks": "Marks",
     "skeleton3dNoMarks": "Click a bone to add a mark.",
     "skeleton3dEditMark": "Edit mark",

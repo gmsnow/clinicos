@@ -685,21 +685,6 @@ export function SkeletonDiagnosis({
         )}
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t px-3 py-2 text-[10px] leading-relaxed text-muted-foreground">
-        <span>
-          {t("skeleton3dAttribution")}{" "}
-          <a
-            className="underline underline-offset-2 hover:text-foreground"
-            href="https://creativecommons.org/licenses/by-sa/4.0/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            CC BY-SA 4.0
-          </a>
-        </span>
-        <span>{t("skeleton3dDisclaimer")}</span>
-      </div>
-
       <Dialog open={Boolean(editing)} onOpenChange={(open) => !open && setEditing(null)}>
         <DialogContent size="default">
           <DialogHeader>

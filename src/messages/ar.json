@@ -1214,8 +1214,6 @@
     "skeleton3dAlready": "{name} موجود بالفعل في تشخيص هذه الزيارة.",
     "skeleton3dFailed": "تعذّر إضافة التشخيص.",
     "skeleton3dUndo": "تراجع",
-    "skeleton3dAttribution": "النموذج: Z-Anatomy / BodyParts3D ·",
-    "skeleton3dDisclaimer": "عرض تعليمي — ليس للاستخدام السريري",
     "skeleton3dMarks": "العلامات",
     "skeleton3dNoMarks": "انقر على عظم لإضافة علامة.",
     "skeleton3dEditMark": "تعديل العلامة",
